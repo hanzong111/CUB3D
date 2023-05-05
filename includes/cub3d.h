@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/05 16:16:07 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/06 00:50:13 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,5 @@ typedef struct s_data
 }	t_data;
 
 void	find_horizontal(t_player *ply, t_temp *temp, t_collide *, char grid[9][9]);
-
+void	find_vertical(t_player *ply, t_temp *temp, t_collide *, char grid[9][9]);
 #endif

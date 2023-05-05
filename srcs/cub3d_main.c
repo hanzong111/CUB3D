@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/05 16:22:03 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/06 01:21:08 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,12 @@ int	main(int argc, char **argv)
 		{'1', '1', '1', '1', '1', '1', '1', '1', '1'}};
 	data.player.pos.x = 4 * WALL_H + (WALL_H / 2);
 	data.player.pos.y = 7 * WALL_H + (WALL_H / 2);
-	data.player.dir.x = -11;
-	data.player.dir.y = -1;
+	data.player.dir.x = 0.8;
+	data.player.dir.y = 1;
 	find_horizontal(&data.player, &data.temp, &data.col, grid);
+	find_vertical(&data.player, &data.temp, &data.col, grid);
 	printf("Player is looking at wall (%d, %d)\n", data.temp.v1.x/64, data.temp.v1.y/64);
+	printf("Player is looking at wall (%d, %d)\n", data.temp.v2.x/64, data.temp.v2.y/64);
 	(void)argc;
 	(void)argv;
 
