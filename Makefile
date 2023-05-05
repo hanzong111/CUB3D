@@ -6,7 +6,7 @@
 #    By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/14 20:26:19 by ojing-ha          #+#    #+#              #
-#    Updated: 2023/05/04 13:07:55 by ojing-ha         ###   ########.fr        #
+#    Updated: 2023/05/05 13:43:05 by ojing-ha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ LIBFTFLAGS	= -L$(LIBFT_DIR) -lft
 MLXFLAGS	= -lmlx -framework OpenGL -framework Appkit
 
 SRC_FILES	= cub3d_main\
+				raytracing_utils
 
 SRCS	= $(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJS	= $(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRC_FILES)))

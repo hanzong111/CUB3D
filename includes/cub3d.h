@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/04 13:57:34 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:16:07 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 // Dont Change This :(
 # define SCREEN_W 1024
 # define SCREEN_H 768
+# define WALL_H 64
+# define OUT_OF_BOUND 99999
 
 // Some Events
 # define MOVE_UP 1
@@ -57,29 +59,38 @@ typedef struct s_player
 	t_dvct	dir;
 }	t_player;
 
-// Image Struct 
-typedef struct s_cb_data_addr
+//	Collision Struct
+typedef struct s_collide
 {
-	char	*address;
-	int		pixel_bits;
-	int		size_line;
-	int		endian;
-	int		pixel;
-}	t_cb_data_addr;
+	t_ivct	A;
+	t_ivct	grid;
+	int		X_a;
+	int		Y_a;
+	double	alpha;
+}	t_collide;
 
-typedef struct s_cb_img
-{
-	void	*img;
-	int		w;
-	int		h;
-}	t_cb_img;
+// // Image Struct 
+// typedef struct s_cb_data_addr
+// {
+// 	char	*address;
+// 	int		pixel_bits;
+// 	int		size_line;
+// 	int		endian;
+// 	int		pixel;
+// }	t_cb_data_addr;
 
-typedef struct s_cb_player
+// typedef struct s_cb_img
+// {
+// 	void	*img;
+// 	int		w;
+// 	int		h;
+// }	t_cb_img;
+
+typedef struct s_temp
 {
-	int				x;
-	int				y;
-	int				state;
-}	t_cb_player;
+	t_ivct	v1;
+	t_ivct	v2;
+}	t_temp;
 
 // Main Global Struct 
 typedef struct s_data
@@ -89,6 +100,12 @@ typedef struct s_data
 	int				start_x;
 	int				start_y;
 	int				enemy_state;
+
+	t_temp			temp;
+	t_player		player;
+	t_collide		col;
 }	t_data;
+
+void	find_horizontal(t_player *ply, t_temp *temp, t_collide *, char grid[9][9]);
 
 #endif
