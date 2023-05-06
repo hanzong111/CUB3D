@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/06 16:34:52 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/07 00:04:33 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_temp
 	t_ivct	v1;
 	t_ivct	v2;
 	t_ivct	final;
+	t_dvct	ray_dir;
 }	t_temp;
 
 //	pre-defined attributes

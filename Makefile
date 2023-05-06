@@ -6,7 +6,7 @@
 #    By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/14 20:26:19 by ojing-ha          #+#    #+#              #
-#    Updated: 2023/05/06 15:57:38 by ojing-ha         ###   ########.fr        #
+#    Updated: 2023/05/06 23:57:23 by ojing-ha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,8 @@ NAME		= cub3d
 CC			= gcc
 
 LIBFT_DIR	= libft/
-MLX_DIR	= mlx/
-# MLX_DIR	= minilibx-linux/
+# MLX_DIR	= mlx/
+MLX_DIR	= minilibx-linux/
 SRCS_DIR	= srcs/
 OBJS_DIR	= objs/
 
@@ -56,18 +56,18 @@ all		:
 		@echo "\n"
 		@echo "$(GREEN) -------------$(RED)I $(CYAN)AM $(GREEN)DONE $(YELLOW)MADAFAKA$(GREEN)-------------------------- $(DEF_COLOR)"
 
-$(OBJS_DIR)%.o:	$(SRCS_DIR)%.c
-				@$(CC) $(CFLAGS) -c $^ -o $@
-				@echo "$(GREEN)Compiling $<...$(DEF_COLOR)"
 # $(OBJS_DIR)%.o:	$(SRCS_DIR)%.c
-# 				@$(CC) -Wall -Wextra -Werror -I/usr/include -Imlx_Linux -O3 -c $< -o $@
-# 				@echo "$(GREEN)Compiling $<$(DEF_COLOR)"
+# 				@$(CC) $(CFLAGS) -c $^ -o $@
+# 				@echo "$(GREEN)Compiling $<...$(DEF_COLOR)"
+$(OBJS_DIR)%.o:	$(SRCS_DIR)%.c
+				@$(CC) -Wall -Wextra -Werror -I/usr/include -Imlx_Linux -O3 -c $< -o $@
+				@echo "$(GREEN)Compiling $<$(DEF_COLOR)"
 
 
-$(NAME)	: ${OBJS}
-		@$(CC) $(CFLAGS) $(LIBFTFLAGS) $(MLXFLAGS) $(OBJS) -o $(NAME)
-# $(NAME): $(OBJS)
-# 	$(CC) $(CFLAGS) $(OBJS) $(LIBFTFLAGS) -L${MLX_DIR} -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+# $(NAME)	: ${OBJS}
+# 		@$(CC) $(CFLAGS) $(LIBFTFLAGS) $(MLXFLAGS) $(OBJS) -o $(NAME)
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFTFLAGS) -L${MLX_DIR} -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
 
 
 clean	:
