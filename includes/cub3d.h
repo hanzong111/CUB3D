@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/06 00:50:13 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/06 16:34:52 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # define SCREEN_H 768
 # define WALL_H 64
 # define OUT_OF_BOUND 99999
+# define HORIZONTAL 80
+# define VERTICAL 90
 
 // Some Events
 # define MOVE_UP 1
@@ -55,7 +57,7 @@ typedef struct s_ivct
 //	Player Struct
 typedef struct s_player
 {
-	t_dvct	pos;
+	t_ivct	pos;
 	t_dvct	dir;
 }	t_player;
 
@@ -90,7 +92,25 @@ typedef struct s_temp
 {
 	t_ivct	v1;
 	t_ivct	v2;
+	t_ivct	final;
 }	t_temp;
+
+//	pre-defined attributes
+typedef struct s_info
+{
+	int		player_height;
+	double	player_fov;
+	double	d_to_plane;
+	double	angle_between_rays;
+}	t_info;
+
+//	Struct to store each wall informations
+typedef struct s_wallinfo
+{
+	int		actual_h;
+	int		projected_h;
+	int		wall_dir;
+}	t_wallinfo;
 
 // Main Global Struct 
 typedef struct s_data
@@ -104,8 +124,23 @@ typedef struct s_data
 	t_temp			temp;
 	t_player		player;
 	t_collide		col;
+	t_wallinfo		wall_info[SCREEN_W];
+	t_info			info;
 }	t_data;
 
-void	find_horizontal(t_player *ply, t_temp *temp, t_collide *, char grid[9][9]);
-void	find_vertical(t_player *ply, t_temp *temp, t_collide *, char grid[9][9]);
+void	initialize(t_data *data);
+void	raytracer(t_data *data, char grid[9][9]);
+
+// Ray_find_wall Functions
+t_ivct	ray_find_wall(t_data *data, char grid[9][9]);
+void	find_horizontal(t_player *ply, t_temp *temp,
+			t_collide *col, char grid[9][9]);
+void	find_vertical(t_player *ply, t_temp *temp,
+			t_collide *col, char grid[9][9]);
+int		grid_wall_check(t_collide *col, char grid[9][9], t_ivct *v);
+void	find_first_intersection(t_player *ply, t_collide *col, int dir);
+int		find_final_intersection(t_collide *col, t_ivct *v, char grid[9][9]);
+
+// Raytracing Utils Functions
+double	calculate_distance(t_ivct ply, t_ivct v);
 #endif

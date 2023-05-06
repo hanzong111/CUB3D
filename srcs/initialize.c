@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raytracing_utils.c                                 :+:      :+:    :+:   */
+/*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/05 13:41:43 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/06 14:47:39 by ojing-ha         ###   ########.fr       */
+/*   Created: 2023/05/06 15:57:59 by ojing-ha          #+#    #+#             */
+/*   Updated: 2023/05/06 16:35:53 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-/*	To Calculate Distance between player and a point.	*/
-double	calculate_distance(t_ivct ply, t_ivct v)
+void	initialize(t_data *data)
 {
-	return (sqrt((ply.x - v.x) * (ply.x - v.x)
-			+ (ply.y - v.y) * (ply.y - v.y)));
+	data->info.player_height = 32;
+	data->info.player_fov = 60;
+	data->info.d_to_plane = (SCREEN_W / 2)
+		/ tan((data->info.player_fov / 2) * M_PI / 180);
+	data->info.angle_between_rays = (data->info.player_fov
+			/ SCREEN_W) * M_PI / 180;
 }

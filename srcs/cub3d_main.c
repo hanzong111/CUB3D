@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/06 01:21:08 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/06 16:22:01 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,19 +78,21 @@ int	main(int argc, char **argv)
 		{'1', '1', '1', '1', '1', '1', '1', '1', '1'}};
 	data.player.pos.x = 4 * WALL_H + (WALL_H / 2);
 	data.player.pos.y = 7 * WALL_H + (WALL_H / 2);
-	data.player.dir.x = 0.8;
-	data.player.dir.y = 1;
-	find_horizontal(&data.player, &data.temp, &data.col, grid);
-	find_vertical(&data.player, &data.temp, &data.col, grid);
+	data.player.dir.x = -1;
+	data.player.dir.y = 0.3;
+	initialize(&data);
+	printf("distance to plane is %f\n Angle between subsequent rays is %f\n", data.info.d_to_plane, data.info.angle_between_rays);
+	raytracer(&data, grid);
 	printf("Player is looking at wall (%d, %d)\n", data.temp.v1.x/64, data.temp.v1.y/64);
 	printf("Player is looking at wall (%d, %d)\n", data.temp.v2.x/64, data.temp.v2.y/64);
+	printf("Final wall is (%d, %d)\n", data.temp.final.x/64, data.temp.final.y/64);
 	(void)argc;
 	(void)argv;
 
-	data.mlx = mlx_init();
-	data.window = mlx_new_window(data.mlx, SCREEN_W, SCREEN_H, "so_long");
+	// data.mlx = mlx_init();
+	// data.window = mlx_new_window(data.mlx, SCREEN_W, SCREEN_H, "so_long");
 	// mlx_loop_hook(data.mlx, render_next_frame, &data);
 	// mlx_key_hook(data.window, event, &data);
-	mlx_hook(data.window, ON_DESTROY, 0L, sl_close_window, &data);
-	mlx_loop(data.mlx);
+	// mlx_hook(data.window, ON_DESTROY, 0L, sl_close_window, &data);
+	// mlx_loop(data.mlx);
 }
