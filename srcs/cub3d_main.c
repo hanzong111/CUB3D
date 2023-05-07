@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/06 23:58:53 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/07 21:08:28 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,12 @@ int	main(int argc, char **argv)
 		{'1', '0', '0', '0', '0', '0', '0', '0', '1'},
 		{'1', '0', '0', '0', '0', '0', '0', '0', '1'},
 		{'1', '0', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '0', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '0', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '0', '0', '0', 'P', '0', '0', '0', '1'},
+		{'1', '1', '1', '1', '1', '1', '1', '1', '1'},
+		{'1', '0', '0', '1', '0', '1', '1', '0', '1'},
+		{'1', '0', '0', '0', 'P', '0', '1', '0', '1'},
 		{'1', '1', '1', '1', '1', '1', '1', '1', '1'}};
-	data.player.pos.x = 4 * WALL_H + (WALL_H / 2);
-	data.player.pos.y = 7 * WALL_H + (WALL_H / 2);
-	data.player.dir.x = 1 / sqrt(2);
-	data.player.dir.y = 1 / sqrt(2);
 	initialize(&data);
-	printf("distance to plane is %f\n Angle between subsequent rays is %f\n", data.info.d_to_plane, data.info.angle_between_rays);
+	// printf("distance to plane is %f\n Angle between subsequent rays is %f\n", data.info.d_to_plane, data.info.angle_between_rays);
 	raytracer(&data, grid);
 	printf("Player is looking at wall (%d, %d)\n", data.temp.v1.x/64, data.temp.v1.y/64);
 	printf("Player is looking at wall (%d, %d)\n", data.temp.v2.x/64, data.temp.v2.y/64);

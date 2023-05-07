@@ -6,7 +6,7 @@
 #    By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/14 20:26:19 by ojing-ha          #+#    #+#              #
-#    Updated: 2023/05/06 23:57:23 by ojing-ha         ###   ########.fr        #
+#    Updated: 2023/05/07 16:29:05 by ojing-ha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,9 @@ MLXFLAGS	= -lmlx -framework OpenGL -framework Appkit
 SRC_FILES	= cub3d_main\
 				initialize\
 				raytracer\
-				raytracing_utils\
 				ray_find_wall\
+				vector_operations_1\
+				vector_operations_2\
 
 SRCS	= $(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJS	= $(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRC_FILES)))

@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/07 00:04:33 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/07 21:24:47 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,17 @@
 # define OUT_OF_BOUND 99999
 # define HORIZONTAL 80
 # define VERTICAL 90
+
+# define NORTH 999
+# define SOUTH 888
+# define EAST 777
+# define WEST 666
+
+# define DEF "\033[0;39m"
+# define RED "\033[0;91m"
+# define GREEN "\033[0;92m"
+# define YELLOW "\033[0;93m"
+# define BLUE "\033[0;94m"
 
 // Some Events
 # define MOVE_UP 1
@@ -52,6 +63,7 @@ typedef struct s_ivct
 {
 	int	x;
 	int	y;
+	int	hit;
 }	t_ivct;
 
 //	Player Struct
@@ -59,6 +71,7 @@ typedef struct s_player
 {
 	t_ivct	pos;
 	t_dvct	dir;
+	t_ivct	facing;
 }	t_player;
 
 //	Collision Struct
@@ -108,8 +121,7 @@ typedef struct s_info
 //	Struct to store each wall informations
 typedef struct s_wallinfo
 {
-	int		actual_h;
-	int		projected_h;
+	double	projected_h;
 	int		wall_dir;
 }	t_wallinfo;
 
@@ -139,9 +151,16 @@ void	find_horizontal(t_player *ply, t_temp *temp,
 void	find_vertical(t_player *ply, t_temp *temp,
 			t_collide *col, char grid[9][9]);
 int		grid_wall_check(t_collide *col, char grid[9][9], t_ivct *v);
-void	find_first_intersection(t_player *ply, t_collide *col, int dir);
+void	find_first_intersection(t_player *ply, t_temp *temp, t_collide *col, int dir);
 int		find_final_intersection(t_collide *col, t_ivct *v, char grid[9][9]);
 
 // Raytracing Utils Functions
+
+//	Vector Operation Functions
+t_dvct	rotate_vector(double rad, t_dvct v);
+double	dot_product(t_dvct v1, t_dvct v2);
+double	magnitude(t_dvct v);
+double	angle_between_vectors(t_dvct v1, t_dvct	v2);
 double	calculate_distance(t_ivct ply, t_ivct v);
+
 #endif
