@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/07 21:54:57 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/08 23:22:41 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,13 @@ t_ivct	ray_find_wall(t_data *data, char grid[9][9])
 void	get_player_dir(t_temp *temp, t_player *player)
 {
 	if (temp->ray_dir.x > 0)
-	{
-		printf("Player : EAST (x)\n");
 		player->facing.x = EAST;
-	}
 	else
-	{
-		printf("Player : WEST (x)\n");
 		player->facing.x = WEST;
-	}
 	if (temp->ray_dir.y > 0)
-	{
-		printf("Player : NORTH (y)\n");
 		player->facing.y = NORTH;
-	}
 	else
-	{
-		printf("Player : SOUTH (y)\n");
 		player->facing.y = SOUTH;
-	}
 }
 
 int	get_wall_dir(t_temp *temp, t_player *player)
@@ -81,23 +69,42 @@ void	fill_in_wall_info(t_data *data, int x)
 	double	d;
 	double	alpha;
 
-	printf("\n\n");
-	// printf("unit coordinate : <%d,%d>\n", data->temp.final.x, data->temp.final.y);
-	// printf("grid coordinate : <%d,%d>\n", data->temp.final.x / 64, data->temp.final.y / 64);
 	d = calculate_distance(data->player.pos, data->temp.final);
 	alpha = angle_between_vectors(data->player.dir, data->temp.ray_dir);
-	printf("Alpha : %f degrees\n", alpha * 180 / M_PI);
 	// printf("distance is %f\n", d);
 	d = ceil(d * cos(alpha));
 	// printf("distance after correction is %f\n", d);
 	data->wall_info[x].projected_h = ceil((data->info.d_to_plane * WALL_H) / d);
 	// printf("Projected height is %f\n", data->wall_info->projected_h);
-	if (data->temp.final.hit == HORIZONTAL)
-		printf("%sWall hit is HORIZONTAL%s\n", RED, DEF);
-	else
-		printf("%sWall hit is VERTICAL%s\n", GREEN, DEF);
 	get_player_dir(&data->temp, &data->player);
 	data->wall_info[x].wall_dir = get_wall_dir(&data->temp, &data->player);
+	(void)x;
+}
+
+void	print_wall_info(t_data *data, int x)
+{
+	double	alpha;
+	
+	printf("\n\n");
+	printf("wall_info[%d]\n", x);
+	printf("unit coordinate : <%d,%d>\n", data->temp.final.x, data->temp.final.y);
+	printf("grid coordinate : <%d,%d>\n", data->temp.final.x / 64, data->temp.final.y / 64);
+	if (data->temp.final.hit == HORIZONTAL)
+	{
+		printf("%sWall hit is HORIZONTAL%s\n", RED, DEF);
+		if (data->player.facing.y == NORTH)
+			printf("Player : NORTH (y)\n");
+		else
+			printf("Player : SOUTH (y)\n");
+	}
+	else
+	{
+		printf("%sWall hit is VERTICAL%s\n", GREEN, DEF);
+		if (data->player.facing.x == EAST)
+			printf("Player : EAST (x)\n");
+		else
+			printf("Player : WEST (x)\n");
+	}
 	if (data->wall_info[x].wall_dir == NORTH)
 		printf("Wall : NORTH (y)\n");
 	else if (data->wall_info[x].wall_dir == SOUTH)
@@ -106,7 +113,10 @@ void	fill_in_wall_info(t_data *data, int x)
 		printf("Wall : EAST (x)\n");
 	else if (data->wall_info[x].wall_dir == WEST)
 		printf("Wall : WEST (x)\n");
-	(void)x;
+	alpha = angle_between_vectors(data->player.dir, data->temp.ray_dir);
+	printf("Alpha : %f degrees\n", alpha * 180 / M_PI);
+	printf("Ray dir is <%f,%f>\n", data->temp.ray_dir.x, data->temp.ray_dir.y);
+
 }
 
 void	raytracer(t_data *data, char grid[9][9])
@@ -116,17 +126,17 @@ void	raytracer(t_data *data, char grid[9][9])
 	x = 0;
 	data->temp.ray_dir = rotate_vector((data->info.player_fov / 2)
 			* M_PI / 180, data->player.dir);
-	// data->temp.ray_dir = rotate_vector((0)
+	// data->temp.ray_dir = rotate_vector((45)
 	// 		* M_PI / 180, data->player.dir);
-	printf("Ray dir is <%f,%f>\n", data->temp.ray_dir.x, data->temp.ray_dir.y);
 	data->temp.final = ray_find_wall(data, grid);
 	fill_in_wall_info(data, x);
-	while (++x < 20)
+	print_wall_info(data, x);
+	while (++x < (SCREEN_W))
 	{
-		printf("Ray dir is <%f,%f>\n", data->temp.ray_dir.x, data->temp.ray_dir.y);
-		data->temp.ray_dir = rotate_vector(-5 * M_PI / 180,
+		data->temp.ray_dir = rotate_vector(-data->info.angle_between_rays,
 				data->temp.ray_dir);
 		data->temp.final = ray_find_wall(data, grid);
 		fill_in_wall_info(data, x);
+		print_wall_info(data, x);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/07 21:24:47 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/08 23:21:37 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_collide
 	int		X_a;
 	int		Y_a;
 	double	alpha;
+	double	angle_per_line;
 }	t_collide;
 
 // // Image Struct 
@@ -137,7 +138,7 @@ typedef struct s_data
 	t_temp			temp;
 	t_player		player;
 	t_collide		col;
-	t_wallinfo		wall_info[SCREEN_W];
+	t_wallinfo		*wall_info;
 	t_info			info;
 }	t_data;
 

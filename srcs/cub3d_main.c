@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/07 21:08:28 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/08 23:21:39 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	main(int argc, char **argv)
 	printf("Final wall is (%d, %d)\n", data.temp.final.x/64, data.temp.final.y/64);
 	(void)argc;
 	(void)argv;
-
+	free(data.wall_info);
 	// data.mlx = mlx_init();
 	// data.window = mlx_new_window(data.mlx, SCREEN_W, SCREEN_H, "so_long");
 	// mlx_loop_hook(data.mlx, render_next_frame, &data);

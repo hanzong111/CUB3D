@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/07 21:25:20 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/08 22:43:06 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,7 @@ void	find_horizontal(t_player *ply, t_temp *temp,
 	temp->v1.hit = HORIZONTAL;
 	col->alpha = atan(temp->ray_dir.y / temp->ray_dir.x);
 	find_first_intersection(ply, temp, col, HORIZONTAL);
-	/*	When ray is being rotated by rotation matrix , computer does not recognise 0.0000 as 0 */
-	if (temp->ray_dir.y < 0.01745 && temp->ray_dir.y > 0)
-		temp->ray_dir.y = 0;
-	if (temp->ray_dir.y == 0)
+	if (fabs(((60 / SCREEN_W) * M_PI / 180) - temp->ray_dir.y) < __FLT_EPSILON__)
 	{
 		temp->v1.x = OUT_OF_BOUND;
 		temp->v1.y = OUT_OF_BOUND;
@@ -97,9 +94,9 @@ void	find_vertical(t_player *ply, t_temp *temp,
 	col->alpha = atan(temp->ray_dir.y / temp->ray_dir.x);
 	find_first_intersection(ply, temp, col, VERTICAL);
 	/*	When ray is being rotated by rotation matrix , computer does not recognise 0.0000 as 0 */
-	if (temp->ray_dir.x < 0.01745 && temp->ray_dir.x > 0)
-		temp->ray_dir.x = 0;
-	if (temp->ray_dir.x == 0)
+	// if (temp->ray_dir.x < 0.01745 && temp->ray_dir.x > 0)
+	// 	temp->ray_dir.x = 0;
+	if (fabs(((60 / SCREEN_W) * M_PI / 180) - temp->ray_dir.x) < __FLT_EPSILON__)
 	{
 		temp->v2.x = OUT_OF_BOUND;
 		temp->v2.y = OUT_OF_BOUND;
