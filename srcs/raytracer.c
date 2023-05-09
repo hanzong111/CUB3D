@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/08 23:22:41 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/09 23:45:14 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,20 @@ void	fill_in_wall_info(t_data *data, int x)
 	d = ceil(d * cos(alpha));
 	// printf("distance after correction is %f\n", d);
 	data->wall_info[x].projected_h = ceil((data->info.d_to_plane * WALL_H) / d);
-	// printf("Projected height is %f\n", data->wall_info->projected_h);
 	get_player_dir(&data->temp, &data->player);
 	data->wall_info[x].wall_dir = get_wall_dir(&data->temp, &data->player);
-	(void)x;
+	if (data->temp.final.hit == HORIZONTAL)
+	{
+		while (data->temp.final.x >= 64)
+			data->temp.final.x -= 64;
+		data->wall_info[x].sprite_col = data->temp.final.x;
+	}
+	else if (data->temp.final.hit == VERTICAL)
+	{
+		while (data->temp.final.y >= 64)
+			data->temp.final.y -= 64;
+		data->wall_info[x].sprite_col = 64 - data->temp.final.y;
+	}
 }
 
 void	print_wall_info(t_data *data, int x)
@@ -87,7 +97,7 @@ void	print_wall_info(t_data *data, int x)
 	
 	printf("\n\n");
 	printf("wall_info[%d]\n", x);
-	printf("unit coordinate : <%d,%d>\n", data->temp.final.x, data->temp.final.y);
+	// printf("unit coordinate : <%d,%d>\n", data->temp.final.x, data->temp.final.y);
 	printf("grid coordinate : <%d,%d>\n", data->temp.final.x / 64, data->temp.final.y / 64);
 	if (data->temp.final.hit == HORIZONTAL)
 	{
@@ -105,17 +115,19 @@ void	print_wall_info(t_data *data, int x)
 		else
 			printf("Player : WEST (x)\n");
 	}
-	if (data->wall_info[x].wall_dir == NORTH)
-		printf("Wall : NORTH (y)\n");
-	else if (data->wall_info[x].wall_dir == SOUTH)
-		printf("Wall : SOUTH (y)\n");
-	else if (data->wall_info[x].wall_dir == EAST)
-		printf("Wall : EAST (x)\n");
-	else if (data->wall_info[x].wall_dir == WEST)
-		printf("Wall : WEST (x)\n");
+	// if (data->wall_info[x].wall_dir == NORTH)
+	// 	printf("Wall : NORTH (y)\n");
+	// else if (data->wall_info[x].wall_dir == SOUTH)
+	// 	printf("Wall : SOUTH (y)\n");
+	// else if (data->wall_info[x].wall_dir == EAST)
+	// 	printf("Wall : EAST (x)\n");
+	// else if (data->wall_info[x].wall_dir == WEST)
+	// 	printf("Wall : WEST (x)\n");
 	alpha = angle_between_vectors(data->player.dir, data->temp.ray_dir);
 	printf("Alpha : %f degrees\n", alpha * 180 / M_PI);
-	printf("Ray dir is <%f,%f>\n", data->temp.ray_dir.x, data->temp.ray_dir.y);
+	// printf("Ray dir is <%f,%f>\n", data->temp.ray_dir.x, data->temp.ray_dir.y);
+	// printf("Projected height is %f\n", data->wall_info[x].projected_h);
+	printf("Sprite col is %d\n", data->wall_info[x].sprite_col);
 
 }
 
@@ -131,7 +143,7 @@ void	raytracer(t_data *data, char grid[9][9])
 	data->temp.final = ray_find_wall(data, grid);
 	fill_in_wall_info(data, x);
 	print_wall_info(data, x);
-	while (++x < (SCREEN_W))
+	while (++x < SCREEN_W)
 	{
 		data->temp.ray_dir = rotate_vector(-data->info.angle_between_rays,
 				data->temp.ray_dir);

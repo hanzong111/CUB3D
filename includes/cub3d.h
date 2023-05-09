@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/08 23:21:37 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/09 23:37:41 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ typedef struct s_wallinfo
 {
 	double	projected_h;
 	int		wall_dir;
+	int		sprite_col;
 }	t_wallinfo;
 
 // Main Global Struct 

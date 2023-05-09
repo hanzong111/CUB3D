@@ -6,7 +6,7 @@
 #    By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/14 20:26:19 by ojing-ha          #+#    #+#              #
-#    Updated: 2023/05/08 23:08:16 by ojing-ha         ###   ########.fr        #
+#    Updated: 2023/05/09 23:25:51 by ojing-ha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ OBJS_DIR	= objs/
 
 INCLUDES	= -I includes
 
-CFLAGS	= -Wall -Werror -Wextra $(HEADER) -fsanitize=address -g3
+CFLAGS	= -Wall -Werror -Wextra $(INCLUDES) -fsanitize=address -g3
 LIBFTFLAGS	= -L$(LIBFT_DIR) -lft
 MLXFLAGS	= -lmlx -framework OpenGL -framework Appkit
 
@@ -61,7 +61,7 @@ all		:
 # 				@$(CC) $(CFLAGS) -c $^ -o $@
 # 				@echo "$(GREEN)Compiling $<...$(DEF_COLOR)"
 $(OBJS_DIR)%.o:	$(SRCS_DIR)%.c
-				@$(CC) -Wall -Wextra -Werror -I/usr/include -Imlx_Linux -O3 -c $< -o $@
+				@$(CC) $(CFLAGS) -Wall -Wextra -Werror -I/usr/include -Imlx_Linux -O3 -c $< -o $@
 				@echo "$(GREEN)Compiling $<$(DEF_COLOR)"
 
 
