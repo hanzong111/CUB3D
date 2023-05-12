@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/09 23:37:41 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:48:34 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,11 @@ int		grid_wall_check(t_collide *col, char grid[9][9], t_ivct *v);
 void	find_first_intersection(t_player *ply, t_temp *temp, t_collide *col, int dir);
 int		find_final_intersection(t_collide *col, t_ivct *v, char grid[9][9]);
 
-// Raytracing Utils Functions
+// Fill Wall Info Functions
+void	get_player_dir(t_temp *temp, t_player *player);
+int		get_wall_dir(t_temp *temp, t_player *player);
+int		get_sprite_col(t_temp	*temp);
+void	fill_in_wall_info(t_data *data, int x);
 
 //	Vector Operation Functions
 t_dvct	rotate_vector(double rad, t_dvct v);
@@ -164,5 +168,8 @@ double	dot_product(t_dvct v1, t_dvct v2);
 double	magnitude(t_dvct v);
 double	angle_between_vectors(t_dvct v1, t_dvct	v2);
 double	calculate_distance(t_ivct ply, t_ivct v);
+
+// Print Functions
+void	print_wall_info(t_data *data, int x);
 
 #endif

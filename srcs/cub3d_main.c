@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/08 23:21:39 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/11 17:05:40 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,7 @@ int	main(int argc, char **argv)
 		{'1', '0', '0', '0', 'P', '0', '1', '0', '1'},
 		{'1', '1', '1', '1', '1', '1', '1', '1', '1'}};
 	initialize(&data);
-	// printf("distance to plane is %f\n Angle between subsequent rays is %f\n", data.info.d_to_plane, data.info.angle_between_rays);
 	raytracer(&data, grid);
-	printf("Player is looking at wall (%d, %d)\n", data.temp.v1.x/64, data.temp.v1.y/64);
-	printf("Player is looking at wall (%d, %d)\n", data.temp.v2.x/64, data.temp.v2.y/64);
-	printf("Final wall is (%d, %d)\n", data.temp.final.x/64, data.temp.final.y/64);
 	(void)argc;
 	(void)argv;
 	free(data.wall_info);
