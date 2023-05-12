@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:40:24 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/11 16:49:06 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/12 17:26:43 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	print_wall_info(t_data *data, int x)
 	// 	printf("Wall : WEST (x)\n");
 	alpha = angle_between_vectors(data->player.dir, data->temp.ray_dir);
 	printf("Alpha : %f degrees\n", alpha * 180 / M_PI);
-	// printf("Ray dir is <%f,%f>\n", data->temp.ray_dir.x, data->temp.ray_dir.y);
+	printf("Ray dir is <%f,%f>\n", data->temp.ray_dir.x, data->temp.ray_dir.y);
 	printf("Projected height is %f\n", data->wall_info[x].projected_h);
 	// printf("Sprite col is %d\n", data->wall_info[x].sprite_col);
 

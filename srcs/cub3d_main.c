@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/11 17:05:40 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/12 17:48:33 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,28 +63,89 @@ int	sl_close_window(t_data *data)
 	return (0);
 }
 
+t_rgb	get_color(t_wallinfo wall, t_render r)
+{
+	if (wall.wall_dir == NORTH)
+		return (r.north);
+	else if (wall.wall_dir == SOUTH)
+		return (r.south);
+	else if (wall.wall_dir == EAST)
+		return (r.east);
+	else
+		return (r.west);
+}
+
+int	get_start_pixel(int	projected_h)
+{
+	if (projected_h >= SCREEN_H)
+		return (0);
+	return((SCREEN_H / 2) - (projected_h / 2));
+}
+
+void	draw_walls(t_rgb color, t_data_addr d, int	height, int width)
+{
+	while (height < SCREEN_H)
+	{
+		d.address[height * d.size_line + width * d.pixel_bits / 8] = color.b;
+		d.address[height * d.size_line + width * d.pixel_bits / 8 + 1] = color.g;
+		d.address[height * d.size_line + width * d.pixel_bits / 8 + 2] = color.r;
+		height++;
+	}
+}
+
+void	render(t_data *data)
+{
+	int			x;
+	int			start_pixel;
+	t_rgb		color;
+	t_data_addr	des;
+
+	x = 0;
+	des.address = mlx_get_data_addr(data->final_img->img, &des.pixel_bits,
+						&des.size_line, &des.endian);
+	while (++x < SCREEN_W)
+	{
+		color = get_color(data->wall_info[x], data->render);
+		start_pixel = get_start_pixel(data->wall_info[x].projected_h);
+		while (start_pixel < SCREEN_H && data->wall_info[x].projected_h >= 0)
+		{
+		des.address[start_pixel * des.size_line + x * des.pixel_bits / 8] = color.b;
+		des.address[start_pixel * des.size_line + x * des.pixel_bits / 8 + 1] = color.g;
+		des.address[start_pixel * des.size_line + x * des.pixel_bits / 8 + 2] = color.r;
+		start_pixel++;
+		data->wall_info[x].projected_h--;
+		}
+	}
+
+}
+
 int	main(int argc, char **argv)
 {
 	t_data			data;
 	char			grid[9][9] = 
 	{	{'1', '1', '1', '1', '1', '1', '1', '1', '1'},
-		{'1', '0', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '0', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '0', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '0', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '1', '1', '1', '1', '1', '1', '1', '1'},
-		{'1', '0', '0', '1', '0', '1', '1', '0', '1'},
-		{'1', '0', '0', '0', 'P', '0', '1', '0', '1'},
+		{'1', '0', '0', '0', '1', '1', '0', '0', '1'},
+		{'1', '0', '0', '0', '0', '1', '0', '0', '1'},
+		{'1', '0', '0', '0', '0', '1', '0', '0', '1'},
+		{'1', '0', '0', '0', '0', '0', '1', '0', '1'},
+		{'1', '1', '0', '0', '0', '0', '0', '1', '1'},
+		{'1', '0', '1', '0', '0', '0', '1', '0', '1'},
+		{'1', '0', '0', '1', 'P', '1', '0', '0', '1'},
 		{'1', '1', '1', '1', '1', '1', '1', '1', '1'}};
 	initialize(&data);
 	raytracer(&data, grid);
+	data.mlx = mlx_init();
+	data.window = mlx_new_window(data.mlx, SCREEN_W, SCREEN_H, "so_long");
+	data.final_img->img = mlx_new_image(data.mlx, SCREEN_W, SCREEN_H);
+	data.final_img->w = SCREEN_W;
+	data.final_img->h = SCREEN_H;
+	render(&data);
+	mlx_put_image_to_window(data.mlx, data.window, data.final_img->img, 0, 0);
 	(void)argc;
 	(void)argv;
-	free(data.wall_info);
-	// data.mlx = mlx_init();
-	// data.window = mlx_new_window(data.mlx, SCREEN_W, SCREEN_H, "so_long");
 	// mlx_loop_hook(data.mlx, render_next_frame, &data);
 	// mlx_key_hook(data.window, event, &data);
 	// mlx_hook(data.window, ON_DESTROY, 0L, sl_close_window, &data);
-	// mlx_loop(data.mlx);
+	free(data.wall_info);
+	mlx_loop(data.mlx);
 }

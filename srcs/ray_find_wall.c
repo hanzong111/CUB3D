@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/09 23:29:46 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/12 17:48:45 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	grid_wall_check(t_collide *col, char grid[9][9], t_ivct *v)
 {
 	col->grid.x = col->A.x / WALL_H;
 	col->grid.y = col->A.y / WALL_H;
+	printf("grid[%d][%d]\n", col->grid.x, col->grid.y);
 	if (col->grid.x >= 0 && col->grid.y >= 0
 		&& grid[col->grid.y][col->grid.x] == '1')
 	{
@@ -35,14 +36,14 @@ void	find_first_intersection(t_player *ply, t_temp *temp,
 		if (temp->ray_dir.y > 0)
 		col->A.y = (int)(ply->pos.y / WALL_H) * WALL_H - 1;
 		else if (temp->ray_dir.y < 0)
-		col->A.y = (int)(ply->pos.y / WALL_H) * WALL_H + 64;
+		col->A.y = (int)(-ply->pos.y / WALL_H) * WALL_H + 64;
 	}
 	else if (dir == VERTICAL)
 	{
 		if (temp->ray_dir.x > 0)
 		col->A.x = (int)(ply->pos.x / WALL_H) * WALL_H + 64;
 		else if (temp->ray_dir.x < 0)
-		col->A.x = (int)(ply->pos.x / WALL_H) * WALL_H - 1;
+		col->A.x = (int)(-ply->pos.x / WALL_H) * WALL_H - 1;
 	}
 }
 

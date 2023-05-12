@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/11 16:48:34 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/12 17:48:45 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,22 +85,30 @@ typedef struct s_collide
 	double	angle_per_line;
 }	t_collide;
 
-// // Image Struct 
-// typedef struct s_cb_data_addr
-// {
-// 	char	*address;
-// 	int		pixel_bits;
-// 	int		size_line;
-// 	int		endian;
-// 	int		pixel;
-// }	t_cb_data_addr;
+// Struct to store rgb value
+typedef struct s_rgb
+{
+	int	r;
+	int	g;
+	int	b;
+}	t_rgb;
 
-// typedef struct s_cb_img
-// {
-// 	void	*img;
-// 	int		w;
-// 	int		h;
-// }	t_cb_img;
+// // Image Struct 
+typedef struct s_data_addr
+{
+	char	*address;
+	int		pixel_bits;
+	int		size_line;
+	int		endian;
+	int		pixel;
+}	t_data_addr;
+
+typedef struct s_img
+{
+	void	*img;
+	int		w;
+	int		h;
+}	t_img;
 
 typedef struct s_temp
 {
@@ -127,6 +135,15 @@ typedef struct s_wallinfo
 	int		sprite_col;
 }	t_wallinfo;
 
+//	Render Struct
+typedef struct s_render
+{
+	t_rgb	north;
+	t_rgb	south;
+	t_rgb	east;
+	t_rgb	west;
+}	t_render;
+
 // Main Global Struct 
 typedef struct s_data
 {
@@ -141,6 +158,8 @@ typedef struct s_data
 	t_collide		col;
 	t_wallinfo		*wall_info;
 	t_info			info;
+	t_render		render;
+	t_img			*final_img;
 }	t_data;
 
 void	initialize(t_data *data);
