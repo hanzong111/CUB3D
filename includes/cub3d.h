@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/13 21:42:32 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/13 23:11:47 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ typedef struct s_data
 	int				start_x;
 	int				start_y;
 	int				enemy_state;
+	char			**grid;
 
 	t_temp			temp;
 	t_player		player;
@@ -165,17 +166,17 @@ typedef struct s_data
 }	t_data;
 
 void	initialize(t_data *data);
-void	raytracer(t_data *data, char grid[9][9]);
+void	raytracer(t_data *data, char **grid, int tick);
 
 // Ray_find_wall Functions
-t_ivct	ray_find_wall(t_data *data, char grid[9][9]);
+t_ivct	ray_find_wall(t_data *data, char **grid);
 void	find_horizontal(t_player *ply, t_temp *temp,
-			t_collide *col, char grid[9][9]);
+			t_collide *col, char **grid);
 void	find_vertical(t_player *ply, t_temp *temp,
-			t_collide *col, char grid[9][9]);
-int		grid_wall_check(t_collide *col, char grid[9][9], t_ivct *v);
+			t_collide *col, char **grid);
+int		grid_wall_check(t_collide *col, char **grid, t_ivct *v);
 void	find_first_intersection(t_player *ply, t_temp *temp, t_collide *col, int dir);
-int		find_final_intersection(t_collide *col, t_ivct *v, char grid[9][9]);
+int		find_final_intersection(t_collide *col, t_ivct *v, char **grid);
 
 // Fill Wall Info Functions
 void	get_player_dir(t_temp *temp, t_player *player);
@@ -192,5 +193,8 @@ double	calculate_distance(t_ivct ply, t_ivct v);
 
 // Print Functions
 void	print_wall_info(t_data *data, int x);
+
+// Render
+void	render(t_data *data);
 
 #endif

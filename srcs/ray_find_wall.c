@@ -6,18 +6,17 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/13 22:43:09 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/13 23:09:03 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
 /*	To Check if grid that the ray hits is a wall or not.	*/
-int	grid_wall_check(t_collide *col, char grid[9][9], t_ivct *v)
+int	grid_wall_check(t_collide *col, char **grid, t_ivct *v)
 {
 	col->grid.x = col->A.x / WALL_H;
 	col->grid.y = col->A.y / WALL_H;
-	printf("grid[%d][%d]\n", col->grid.x, col->grid.y);
 	if (col->grid.x >= 0 && col->grid.y >= 0
 		&& col->grid.x <= 8 && col->grid.y <= 8
 		&& grid[col->grid.y][col->grid.x] == '1')
@@ -48,7 +47,7 @@ void	find_first_intersection(t_player *ply, t_temp *temp,
 	}
 }
 
-int	find_final_intersection(t_collide *col, t_ivct *v, char grid[9][9])
+int	find_final_intersection(t_collide *col, t_ivct *v, char **grid)
 {
 	while ((col->A.x < SCREEN_W && col->A.x >= 0)
 		&& (col->A.y < SCREEN_H && col->A.y >= 0))
@@ -63,7 +62,7 @@ int	find_final_intersection(t_collide *col, t_ivct *v, char grid[9][9])
 
 /*	Checking Horizontal Intersections	*/
 void	find_horizontal(t_player *ply, t_temp *temp,
-		t_collide *col, char grid[9][9])
+		t_collide *col, char **grid)
 {
 	temp->v1.hit = HORIZONTAL;
 	col->alpha = atan(temp->ray_dir.y / temp->ray_dir.x);
@@ -90,7 +89,7 @@ void	find_horizontal(t_player *ply, t_temp *temp,
 
 /*	Checking Vertical Intersections	*/
 void	find_vertical(t_player *ply, t_temp *temp,
-		t_collide *col, char grid[9][9])
+		t_collide *col, char **grid)
 {
 	temp->v2.hit = VERTICAL;
 	col->alpha = atan(temp->ray_dir.y / temp->ray_dir.x);

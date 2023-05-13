@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/13 22:44:32 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/13 23:13:14 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*	Find Intersections and decides which point/wall 	*/
 /*	does the player sees first							*/
-t_ivct	ray_find_wall(t_data *data, char grid[9][9])
+t_ivct	ray_find_wall(t_data *data, char **grid)
 {
 	double	d1;
 	double	d2;
@@ -33,24 +33,25 @@ t_ivct	ray_find_wall(t_data *data, char grid[9][9])
 		return (data->temp.v2);
 }
 
-void	raytracer(t_data *data, char grid[9][9])
+void	raytracer(t_data *data, char **grid, int tick)
 {
 	int	x;
 
 	x = 0;
-	data->player.dir = rotate_vector((0)
-			* M_PI / 180, data->player.dir);
+	if (tick % 5 == 0)
+		data->player.dir = rotate_vector((1)
+				* M_PI / 180, data->player.dir);
 	data->temp.ray_dir = rotate_vector((data->info.player_fov / 2)
 			* M_PI / 180, data->player.dir);
 	data->temp.final = ray_find_wall(data, grid);
 	fill_in_wall_info(data, x);
-	print_wall_info(data, x);
+	// print_wall_info(data, x);
 	while (++x < SCREEN_W)
 	{
 		data->temp.ray_dir = rotate_vector(-data->info.angle_between_rays,
 				data->temp.ray_dir);
 		data->temp.final = ray_find_wall(data, grid);
 		fill_in_wall_info(data, x);
-		print_wall_info(data, x);
+		// print_wall_info(data, x);
 	}
 }

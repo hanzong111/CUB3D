@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/13 22:44:49 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/13 23:16:53 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,6 @@
 // 	return (0);
 // }
 
-// int	render_next_frame(t_data *data)
-// {
-// 	static int	tick;
-
-// 	tick++;
-// 	check_move_list(data);
-// 	choose_frame(tick, data);
-// 	render_map(data);
-// 	if (data->map.enemy != 0)
-// 		add_enemy(data);
-// 	generate_ui(data);
-// 	mlx_put_image_to_window(data->mlx, data->window, data->final_img.img, 0, 0);
-// 	mlx_destroy_image(data->mlx, data->final_img.img);
-// 	return (0);
-// }
 
 int	sl_close_window(t_data *data)
 {
@@ -144,33 +129,44 @@ void	render(t_data *data)
 
 }
 
+int	render_next_frame(t_data *data)
+{
+	static int	tick;
+
+	tick++;
+	raytracer(data, data->grid, tick);
+	data->final_img.img = mlx_new_image(data->mlx, SCREEN_W, SCREEN_H);
+	data->final_img.w = SCREEN_W;
+	data->final_img.h = SCREEN_H;
+	render(data);
+	mlx_put_image_to_window(data->mlx, data->window, data->final_img.img, 0, 0);
+	mlx_destroy_image(data->mlx, data->final_img.img);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data			data;
-	char			grid[9][9] = 
-	{	{'1', '1', '1', '1', '1', '1', '1', '1', '1'},
-		{'1', '0', '0', '0', '1', '1', '0', '0', '1'},
-		{'1', '0', '0', '0', '0', '1', '0', '0', '1'},
-		{'1', '0', '0', '0', '0', '1', '1', '0', '1'},
-		{'1', '0', '0', '0', '0', '1', '1', '0', '1'},
-		{'1', '0', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '1', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '0', '0', '0', 'P', '0', '0', '0', '1'},
-		{'1', '1', '1', '1', '1', '1', '1', '1', '1'}};
+
 	initialize(&data);
-	raytracer(&data, grid);
+	data.grid = malloc(sizeof(char *) * 9);
+	data.grid[0] = ft_strdup("111111111");
+	data.grid[1] = ft_strdup("100000001");
+	data.grid[2] = ft_strdup("101000101");
+	data.grid[3] = ft_strdup("100000001");
+	data.grid[4] = ft_strdup("100010001");
+	data.grid[5] = ft_strdup("100000001");
+	data.grid[6] = ft_strdup("100000001");
+	data.grid[7] = ft_strdup("1000P0001");
+	data.grid[8] = ft_strdup("111111111");
+
 	data.mlx = mlx_init();
 	data.window = mlx_new_window(data.mlx, SCREEN_W, SCREEN_H, "so_long");
-	data.final_img.img = mlx_new_image(data.mlx, SCREEN_W, SCREEN_H);
-	data.final_img.w = SCREEN_W;
-	data.final_img.h = SCREEN_H;
-	render(&data);
-	mlx_put_image_to_window(data.mlx, data.window, data.final_img.img, 0, 0);
 	(void)argc;
 	(void)argv;
-	// mlx_loop_hook(data.mlx, render_next_frame, &data);
+	mlx_loop_hook(data.mlx, render_next_frame, &data);
 	// mlx_key_hook(data.window, event, &data);
 	// mlx_hook(data.window, ON_DESTROY, 0L, sl_close_window, &data);
-	free(data.wall_info);
+	// free(data.wall_info);
 	mlx_loop(data.mlx);
 }
