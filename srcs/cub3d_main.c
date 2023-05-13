@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/13 21:43:21 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/13 22:44:49 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,30 @@ void	draw_walls(t_rgb color, t_data_addr d, int	height, int width)
 	}
 }
 
+void	draw_sky_floor(t_render *render, t_data_addr d)
+{
+	t_rgb	color;
+	int		x;
+	int		y;
+
+	y = -1;
+	while (++y < SCREEN_H)
+	{
+		if (y < (SCREEN_H / 2))
+			color = render->sky;
+		else
+			color = render->floor;
+		x = -1;
+		while (++x < SCREEN_W)
+		{
+			d.address[y * d.size_line + x * d.pixel_bits / 8] = color.b;
+			d.address[y * d.size_line + x * d.pixel_bits / 8 + 1] = color.g;
+			d.address[y * d.size_line + x * d.pixel_bits / 8 + 2] = color.r;
+		}
+	}
+
+}
+
 void	render(t_data *data)
 {
 	int			x;
@@ -100,9 +124,10 @@ void	render(t_data *data)
 	t_rgb		color;
 	t_data_addr	des;
 
-	x = 0;
+	x = -1;
 	des.address = mlx_get_data_addr(data->final_img.img, &des.pixel_bits,
 						&des.size_line, &des.endian);
+	draw_sky_floor(&data->render, des);
 	while (++x < SCREEN_W)
 	{
 		color = get_color(data->wall_info[x], data->render);
@@ -126,11 +151,11 @@ int	main(int argc, char **argv)
 	{	{'1', '1', '1', '1', '1', '1', '1', '1', '1'},
 		{'1', '0', '0', '0', '1', '1', '0', '0', '1'},
 		{'1', '0', '0', '0', '0', '1', '0', '0', '1'},
-		{'1', '0', '0', '0', '0', '1', '0', '0', '1'},
-		{'1', '0', '0', '0', '0', '0', '1', '0', '1'},
-		{'1', '1', '0', '0', '0', '0', '0', '1', '1'},
-		{'1', '0', '1', '0', '0', '0', '1', '0', '1'},
-		{'1', '0', '0', '1', 'P', '1', '0', '0', '1'},
+		{'1', '0', '0', '0', '0', '1', '1', '0', '1'},
+		{'1', '0', '0', '0', '0', '1', '1', '0', '1'},
+		{'1', '0', '0', '0', '0', '0', '0', '0', '1'},
+		{'1', '1', '0', '0', '0', '0', '0', '0', '1'},
+		{'1', '0', '0', '0', 'P', '0', '0', '0', '1'},
 		{'1', '1', '1', '1', '1', '1', '1', '1', '1'}};
 	initialize(&data);
 	raytracer(&data, grid);
