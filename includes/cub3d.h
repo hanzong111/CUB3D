@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/12 17:48:45 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/13 21:42:32 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,8 @@ typedef struct s_render
 	t_rgb	south;
 	t_rgb	east;
 	t_rgb	west;
+	t_rgb	sky;
+	t_rgb	floor;
 }	t_render;
 
 // Main Global Struct 
@@ -159,7 +161,7 @@ typedef struct s_data
 	t_wallinfo		*wall_info;
 	t_info			info;
 	t_render		render;
-	t_img			*final_img;
+	t_img			final_img;
 }	t_data;
 
 void	initialize(t_data *data);

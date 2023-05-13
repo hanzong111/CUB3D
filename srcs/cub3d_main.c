@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/12 17:48:33 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/13 21:43:21 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	render(t_data *data)
 	t_data_addr	des;
 
 	x = 0;
-	des.address = mlx_get_data_addr(data->final_img->img, &des.pixel_bits,
+	des.address = mlx_get_data_addr(data->final_img.img, &des.pixel_bits,
 						&des.size_line, &des.endian);
 	while (++x < SCREEN_W)
 	{
@@ -136,11 +136,11 @@ int	main(int argc, char **argv)
 	raytracer(&data, grid);
 	data.mlx = mlx_init();
 	data.window = mlx_new_window(data.mlx, SCREEN_W, SCREEN_H, "so_long");
-	data.final_img->img = mlx_new_image(data.mlx, SCREEN_W, SCREEN_H);
-	data.final_img->w = SCREEN_W;
-	data.final_img->h = SCREEN_H;
+	data.final_img.img = mlx_new_image(data.mlx, SCREEN_W, SCREEN_H);
+	data.final_img.w = SCREEN_W;
+	data.final_img.h = SCREEN_H;
 	render(&data);
-	mlx_put_image_to_window(data.mlx, data.window, data.final_img->img, 0, 0);
+	mlx_put_image_to_window(data.mlx, data.window, data.final_img.img, 0, 0);
 	(void)argc;
 	(void)argv;
 	// mlx_loop_hook(data.mlx, render_next_frame, &data);

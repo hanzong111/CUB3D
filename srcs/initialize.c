@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 15:57:59 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/12 17:48:58 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/13 21:41:39 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,12 @@ void	initialize(t_data *data)
 	data->render.west.r = 204;
 	data->render.west.g = 153;
 	data->render.west.b = 255;
+
+	data->render.sky.r = 153;
+	data->render.sky.g = 255;
+	data->render.sky.b = 255;
+
+	data->render.floor.r = 255;
+	data->render.floor.g = 255;
+	data->render.floor.b = 153;
 }
