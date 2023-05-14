@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:45:52 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/13 23:09:39 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/14 19:13:58 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,8 @@ void	fill_in_wall_info(t_data *data, int x)
 
 	d = calculate_distance(data->player.pos, data->temp.final);
 	alpha = angle_between_vectors(data->player.dir, data->temp.ray_dir);
-	// printf("distance is %f\n", d);
-	d = d * cos(alpha);
-	// printf("distance after correction is %f\n", d);
+	if (!isnan(alpha))
+		d = d * cos(alpha);
 	data->wall_info[x].projected_h = ceil((data->info.d_to_plane * WALL_H) / d);
 	get_player_dir(&data->temp, &data->player);
 	data->wall_info[x].wall_dir = get_wall_dir(&data->temp, &data->player);

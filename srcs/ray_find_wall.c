@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/14 18:28:51 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/14 19:57:51 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	grid_wall_check(t_collide *col, char **grid, t_ivct *v)
 	col->grid.x = col->A.x / WALL_H;
 	col->grid.y = col->A.y / WALL_H;
 	if (col->grid.x >= 0 && col->grid.y >= 0
-		&& col->grid.x <= col->grid_size.x
-		&& col->grid.y <= (col->grid_size.y - 1)
+		&& col->grid.x < col->grid_size.x
+		&& col->grid.y < col->grid_size.y
 		&& grid[col->grid.y][col->grid.x] == '1')
 	{
 		v->x = col->A.x;
@@ -95,9 +95,6 @@ void	find_vertical(t_player *ply, t_temp *temp,
 	temp->v2.hit = VERTICAL;
 	col->alpha = atan(temp->ray_dir.y / temp->ray_dir.x);
 	find_first_intersection(ply, temp, col, VERTICAL);
-	/*	When ray is being rotated by rotation matrix , computer does not recognise 0.0000 as 0 */
-	// if (temp->ray_dir.x < 0.01745 && temp->ray_dir.x > 0)
-	// 	temp->ray_dir.x = 0;
 	if (fabs(((60 / SCREEN_W) * M_PI / 180) - temp->ray_dir.x) < __FLT_EPSILON__)
 	{
 		temp->v2.x = OUT_OF_BOUND;

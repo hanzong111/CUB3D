@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/14 18:29:45 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/14 19:55:55 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,17 +159,17 @@ int	main(int argc, char **argv)
 	data.grid[7] = ft_strdup("100000001");
 	data.grid[8] = ft_strdup("100000001");
 	data.grid[9] = ft_strdup("100000001");
-	data.grid[10] = ft_strdup("100000001");
-	data.grid[11] = ft_strdup("100000101");
+	data.grid[10] = ft_strdup("100001001");
+	data.grid[11] = ft_strdup("100001101");
 	data.grid[12] = ft_strdup("100000001");
-	data.grid[13] = ft_strdup("101000101");
-	data.grid[14] = ft_strdup("100010001");
+	data.grid[13] = ft_strdup("100000001");
+	data.grid[14] = ft_strdup("100000001");
 	data.grid[15] = ft_strdup("100000001");
-	data.grid[16] = ft_strdup("100000101");
-	data.grid[17] = ft_strdup("110001001");
-	data.grid[18] = ft_strdup("101000001");
-	data.grid[19] = ft_strdup("100100001");
-	data.grid[20] = ft_strdup("100010001");
+	data.grid[16] = ft_strdup("100000001");
+	data.grid[17] = ft_strdup("100000001");
+	data.grid[18] = ft_strdup("100000001");
+	data.grid[19] = ft_strdup("100000001");
+	data.grid[20] = ft_strdup("100000001");
 	data.grid[21] = ft_strdup("111111111");
 	data.grid[22] = NULL;
 	initialize(&data);
