@@ -6,11 +6,19 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 15:57:59 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/13 23:01:31 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/14 18:30:46 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+void	map_size(t_collide *col, char **grid)
+{
+	col->grid_size.x = ft_strlen(grid[0]);
+	col->grid_size.y = 0;
+	while (grid[col->grid_size.y] != NULL)
+		col->grid_size.y++;
+}
 
 void	initialize(t_data *data)
 {
@@ -23,7 +31,7 @@ void	initialize(t_data *data)
 	data->wall_info = malloc(sizeof(t_wallinfo) * SCREEN_W);
 	/*	Will be input in the future	*/
 	data->player.pos.x = 4 * WALL_H + (WALL_H / 2);
-	data->player.pos.y = 7 * WALL_H + (WALL_H / 2);
+	data->player.pos.y = 6 * WALL_H + (WALL_H / 2);
 	data->player.dir.x = 1;
 	data->player.dir.y = 0;
 
@@ -54,4 +62,5 @@ void	initialize(t_data *data)
 	data->render.floor.r = 255;
 	data->render.floor.g = 255;
 	data->render.floor.b = 153;
+	map_size(&data->col, data->grid);
 }

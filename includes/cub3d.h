@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/13 23:11:47 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/14 18:25:57 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_collide
 {
 	t_ivct	A;
 	t_ivct	grid;
+	t_ivct	grid_size;
 	int		X_a;
 	int		Y_a;
 	double	alpha;
@@ -151,9 +152,6 @@ typedef struct s_data
 {
 	void			*mlx;
 	void			*window;
-	int				start_x;
-	int				start_y;
-	int				enemy_state;
 	char			**grid;
 
 	t_temp			temp;

@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/13 23:13:14 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/14 18:33:26 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@ t_ivct	ray_find_wall(t_data *data, char **grid)
 
 void	raytracer(t_data *data, char **grid, int tick)
 {
+	(void)tick;
 	int	x;
 
 	x = 0;
-	if (tick % 5 == 0)
-		data->player.dir = rotate_vector((1)
+	// if (tick % 1 == 0)
+	data->player.dir = rotate_vector((0.15)
 				* M_PI / 180, data->player.dir);
 	data->temp.ray_dir = rotate_vector((data->info.player_fov / 2)
 			* M_PI / 180, data->player.dir);

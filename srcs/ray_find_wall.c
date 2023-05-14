@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/13 23:09:03 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/14 18:28:51 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	grid_wall_check(t_collide *col, char **grid, t_ivct *v)
 	col->grid.x = col->A.x / WALL_H;
 	col->grid.y = col->A.y / WALL_H;
 	if (col->grid.x >= 0 && col->grid.y >= 0
-		&& col->grid.x <= 8 && col->grid.y <= 8
+		&& col->grid.x <= col->grid_size.x
+		&& col->grid.y <= (col->grid_size.y - 1)
 		&& grid[col->grid.y][col->grid.x] == '1')
 	{
 		v->x = col->A.x;
@@ -49,8 +50,8 @@ void	find_first_intersection(t_player *ply, t_temp *temp,
 
 int	find_final_intersection(t_collide *col, t_ivct *v, char **grid)
 {
-	while ((col->A.x < SCREEN_W && col->A.x >= 0)
-		&& (col->A.y < SCREEN_H && col->A.y >= 0))
+	while ((col->A.x < (col->grid_size.x * WALL_H) && col->A.x >= 0)
+		&& (col->A.y < (col->grid_size.y * WALL_H) && col->A.y >= 0))
 	{
 		col->A.x += col->X_a;
 		col->A.y += col->Y_a;
