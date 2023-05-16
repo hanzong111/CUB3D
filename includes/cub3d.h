@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/14 18:25:57 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/16 16:54:14 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@
 # define SOUTH 888
 # define EAST 777
 # define WEST 666
+
+//	Pixels
+# define MOVE_SPEED 2
+//	Degrees
+# define TURN_SPEED	4
 
 # define DEF "\033[0;39m"
 # define RED "\033[0;91m"

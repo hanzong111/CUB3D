@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/14 19:55:55 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/16 16:53:03 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,58 @@
 /* 	A  	  || 0						*/
 /*	D  	  || 2						*/
 
-// int	event(int keycode, t_data *data)
-// {
-// 	if (keycode == 65307)
-// 	{
-// 		ft_printf("Esc pressed.\n");
-// 		ft_printf("Exiting so_long ...\n");
-// 		exit(0);
-// 	}
-// 	if (keycode == 'w')
-// 		sl_lstadd_back(&data->player.move_list, sl_lstnew(MOVE_UP));
-// 	if (keycode == 's')
-// 		sl_lstadd_back(&data->player.move_list, sl_lstnew(MOVE_DOWN));
-// 	if (keycode == 'a')
-// 		sl_lstadd_back(&data->player.move_list, sl_lstnew(MOVE_LEFT));
-// 	if (keycode == 'd')
-// 		sl_lstadd_back(&data->player.move_list, sl_lstnew(MOVE_RIGHT));
-// 	return (0);
-// }
+void	move_player_coordinates(t_data *data, int keycode, t_dvct dir)
+{
+	t_dvct	x_axis;
+	double	alpha;
+	int		x;
+	int		y;
+
+	x_axis.x = 1;
+	x_axis.y = 0;
+	alpha = angle_between_vectors(dir, x_axis);
+	x = MOVE_SPEED * cos(alpha);
+	y = MOVE_SPEED * sin(alpha);
+	data->temp.ray_dir = dir;
+	get_player_dir(&data->temp, &data->player);
+	if (keycode == 's' || keycode == 'd')
+	{
+		x *= -1;
+		y *= -1;
+	}
+	if (data->player.facing.y == NORTH)
+	{
+		data->player.pos.x += x;
+		data->player.pos.y -= y;
+	}
+	else
+	{
+		data->player.pos.x += x;
+		data->player.pos.y += y;
+	}
+}
+
+int	event(int keycode, t_data *data)
+{
+	if (keycode == 65307)
+	{
+		ft_printf("Esc pressed.\n");
+		ft_printf("Exiting so_long ...\n");
+		exit(0);
+	}
+	if (keycode == 'w' || keycode == 's')
+		move_player_coordinates(data, keycode, data->player.dir);
+	if (keycode == 'a' || keycode == 'd')
+		move_player_coordinates(data, keycode,
+			rotate_vector(M_PI / 2, data->player.dir));
+	if (keycode == 65361)
+		data->player.dir = rotate_vector((TURN_SPEED)
+			* M_PI / 180, data->player.dir);
+	if (keycode == 65363)
+		data->player.dir = rotate_vector(-(TURN_SPEED)
+			* M_PI / 180, data->player.dir);
+	return (0);
+}
 
 
 int	sl_close_window(t_data *data)
@@ -179,7 +213,7 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 	mlx_loop_hook(data.mlx, render_next_frame, &data);
-	// mlx_key_hook(data.window, event, &data);
+	mlx_key_hook(data.window, event, &data);
 	// mlx_hook(data.window, ON_DESTROY, 0L, sl_close_window, &data);
 	// free(data.wall_info);
 	mlx_loop(data.mlx);

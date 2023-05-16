@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 15:57:59 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/14 18:51:54 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/16 15:42:33 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	initialize(t_data *data)
 	data->player.pos.x = 4 * WALL_H + (WALL_H / 2);
 	data->player.pos.y = 6 * WALL_H + (WALL_H / 2);
 	data->player.dir.x = 0;
-	data->player.dir.y = -1;
+	data->player.dir.y = 1;
 
 	/*	Red	*/
 	data->render.north.r = 255;
