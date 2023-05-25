@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/16 16:53:03 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/25 18:29:41 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,13 +168,10 @@ int	render_next_frame(t_data *data)
 	static int	tick;
 
 	tick++;
-	raytracer(data, data->grid, tick);
-	data->final_img.img = mlx_new_image(data->mlx, SCREEN_W, SCREEN_H);
-	data->final_img.w = SCREEN_W;
-	data->final_img.h = SCREEN_H;
+	(void)tick;
+	raytracer(data, data->grid);
 	render(data);
 	mlx_put_image_to_window(data->mlx, data->window, data->final_img.img, 0, 0);
-	mlx_destroy_image(data->mlx, data->final_img.img);
 	return (0);
 }
 
@@ -185,9 +182,9 @@ int	main(int argc, char **argv)
 	data.grid = malloc(sizeof(char *) * 23);
 	data.grid[0] = ft_strdup("111111111");
 	data.grid[1] = ft_strdup("100000001");
-	data.grid[2] = ft_strdup("101000101");
-	data.grid[3] = ft_strdup("100000001");
-	data.grid[4] = ft_strdup("100010001");
+	data.grid[2] = ft_strdup("111000101");
+	data.grid[3] = ft_strdup("101000001");
+	data.grid[4] = ft_strdup("100000001");
 	data.grid[5] = ft_strdup("100000001");
 	data.grid[6] = ft_strdup("1000P0001");
 	data.grid[7] = ft_strdup("100000001");
@@ -207,14 +204,31 @@ int	main(int argc, char **argv)
 	data.grid[21] = ft_strdup("111111111");
 	data.grid[22] = NULL;
 	initialize(&data);
-
-	data.mlx = mlx_init();
-	data.window = mlx_new_window(data.mlx, SCREEN_W, SCREEN_H, "so_long");
 	(void)argc;
 	(void)argv;
+	
+	data.mlx = mlx_init();
+	data.window = mlx_new_window(data.mlx, SCREEN_W, SCREEN_H, "CUB3D");
+	data.final_img.img = mlx_new_image(data.mlx, SCREEN_W, SCREEN_H);
+	data.final_img.w = SCREEN_W;
+	data.final_img.h = SCREEN_H;
 	mlx_loop_hook(data.mlx, render_next_frame, &data);
 	mlx_key_hook(data.window, event, &data);
-	// mlx_hook(data.window, ON_DESTROY, 0L, sl_close_window, &data);
-	// free(data.wall_info);
+	mlx_hook(data.window, ON_DESTROY, 0L, sl_close_window, &data);
 	mlx_loop(data.mlx);
+
+	// data.mlx = mlx_init();
+	// data.window = mlx_new_window(data.mlx, SCREEN_W, SCREEN_H, "CUB3D");
+	// data.final_img.img = mlx_new_image(data.mlx, SCREEN_W, SCREEN_H);
+	// data.final_img.w = SCREEN_W;
+	// data.final_img.h = SCREEN_H;
+	// raytracer(&data, data.grid);
+	// render(&data);
+	// mlx_put_image_to_window(data.mlx, data.window, data.final_img.img, 0, 0);
+	// int x = -1;
+	// while (++x <= 22)
+	// 	free(data.grid[x]);
+	// free(data.grid);
+	// free(data.wall_info);
+	// mlx_loop(data.mlx);
 }

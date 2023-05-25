@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:45:52 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/14 19:13:58 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:57:30 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	get_player_dir(t_temp *temp, t_player *player)
 {
+	player->facing.x = 0;
+	player->facing.y = 0;
 	if (temp->ray_dir.x > 0)
 		player->facing.x = EAST;
 	else

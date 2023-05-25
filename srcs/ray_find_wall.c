@@ -5,112 +5,167 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/14 19:57:51 by ojing-ha         ###   ########.fr       */
+/*   Created: 2023/05/23 15:43:46 by ojing-ha          #+#    #+#             */
+/*   Updated: 2023/05/25 18:44:11 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-/*	To Check if grid that the ray hits is a wall or not.	*/
-int	grid_wall_check(t_collide *col, char **grid, t_ivct *v)
+void	get_ray_dir(t_temp *temp)
 {
-	col->grid.x = col->A.x / WALL_H;
-	col->grid.y = col->A.y / WALL_H;
+	temp->facing.x = 0;
+	temp->facing.y = 0;
+	if (temp->ray_dir.x > 0)
+		temp->facing.x = EAST;
+	else
+		temp->facing.x = WEST;
+	if (temp->ray_dir.y > 0)
+		temp->facing.y = NORTH;
+	else
+		temp->facing.y = SOUTH;
+}
+
+int	h_grid_wall_check(t_temp *tmp, t_collide *col, char **grid, t_ivct *v)
+{
+// 	printf("\n\nAt <%d,%d>\n", col->A.x, col->A.y);
+// 	printf("is %d\n", col->A.x % WALL_H);
+	if (tmp->ray_dir.y > 0)
+		col->grid.y = (int)((col->A.y - 1) / WALL_H);
+	else
+		col->grid.y = (int)((col->A.y + 1) / WALL_H);
+	if (col->A.x % WALL_H == 63)
+	{
+		if (tmp->ray_dir.x > 0)
+			col->grid.x = (int)((col->A.x + 1)/ WALL_H);
+		else
+			col->grid.x = (int)((col->A.x - 1)/ WALL_H);
+	}
+	else
+		col->grid.x = (int)(col->A.x / WALL_H);
 	if (col->grid.x >= 0 && col->grid.y >= 0
 		&& col->grid.x < col->grid_size.x
 		&& col->grid.y < col->grid_size.y
 		&& grid[col->grid.y][col->grid.x] == '1')
 	{
-		v->x = col->A.x;
-		v->y = col->A.y;
+		// printf("final grid<%d,%d>\n", col->grid.x, col->grid.y);
+		v->x = (int)col->A.x;
+		v->y = (int)col->A.y;
 		return (1);
 	}
 	return (0);
 }
 
-void	find_first_intersection(t_player *ply, t_temp *temp,
-		t_collide *col, int dir)
-{
-	if (dir == HORIZONTAL)
-	{
-		if (temp->ray_dir.y > 0)
-		col->A.y = (int)(ply->pos.y / WALL_H) * WALL_H - 1;
-		else if (temp->ray_dir.y < 0)
-		col->A.y = (int)(ply->pos.y / WALL_H) * WALL_H + 64;
-	}
-	else if (dir == VERTICAL)
-	{
-		if (temp->ray_dir.x > 0)
-		col->A.x = (int)(ply->pos.x / WALL_H) * WALL_H + 64;
-		else if (temp->ray_dir.x < 0)
-		col->A.x = (int)(ply->pos.x / WALL_H) * WALL_H - 1;
-	}
-}
-
-int	find_final_intersection(t_collide *col, t_ivct *v, char **grid)
+int	h_find_final_intersection(t_temp *tmp, t_collide *col, char **grid, t_ivct *v)
 {
 	while ((col->A.x < (col->grid_size.x * WALL_H) && col->A.x >= 0)
 		&& (col->A.y < (col->grid_size.y * WALL_H) && col->A.y >= 0))
 	{
 		col->A.x += col->X_a;
 		col->A.y += col->Y_a;
-		if (grid_wall_check(col, grid, v))
+		if (h_grid_wall_check(tmp, col, grid, v))
 			return (1);
 	}
 	return (0);
 }
 
 /*	Checking Horizontal Intersections	*/
-void	find_horizontal(t_player *ply, t_temp *temp,
-		t_collide *col, char **grid)
+void	find_horizontal(t_data *data, char **grid)
 {
-	temp->v1.hit = HORIZONTAL;
-	col->alpha = atan(temp->ray_dir.y / temp->ray_dir.x);
-	find_first_intersection(ply, temp, col, HORIZONTAL);
-	if (fabs(((60 / SCREEN_W) * M_PI / 180) - temp->ray_dir.y) < __FLT_EPSILON__)
+	data->temp.v1.hit = HORIZONTAL;
+	data->col.alpha = atan(data->temp.ray_dir.y / data->temp.ray_dir.x);
+	if (data->temp.ray_dir.y > 0)
+		data->col.A.y = (int)(data->player.pos.y / WALL_H) * WALL_H;
+	else if (data->temp.ray_dir.y < 0)
+		data->col.A.y = (int)(data->player.pos.y / WALL_H) * WALL_H + 64;
+	if (fabs(((60 / SCREEN_W) * M_PI / 180) - data->temp.ray_dir.y) < __FLT_EPSILON__)
 	{
-		temp->v1.x = OUT_OF_BOUND;
-		temp->v1.y = OUT_OF_BOUND;
+		data->temp.v1.x = OUT_OF_BOUND;
+		data->temp.v1.y = OUT_OF_BOUND;
 		return ;
 	}
-	col->A.x = ply->pos.x + (ply->pos.y - col->A.y) / tan(col->alpha);
-	if (grid_wall_check(col, grid, &temp->v1))
+	data->col.A.x = data->player.pos.x + (int)(data->player.pos.y - data->col.A.y) / tan(data->col.alpha);
+	if (h_grid_wall_check(&data->temp, &data->col, grid, &data->temp.v1))
 		return ;
-	if (temp->ray_dir.y > 0)
-		col->Y_a = -WALL_H;
+	if (data->temp.ray_dir.y > 0)
+		data->col.Y_a = -WALL_H;
 	else
-		col->Y_a = WALL_H;
-	col->X_a = -col->Y_a / tan(col->alpha);
-	if (find_final_intersection(col, &temp->v1, grid))
+		data->col.Y_a = WALL_H;
+	data->col.X_a = (int)(-data->col.Y_a / tan(data->col.alpha));
+	if (h_find_final_intersection(&data->temp, &data->col, grid, &data->temp.v1))
 		return ;
-	temp->v1.x = OUT_OF_BOUND;
-	temp->v1.y = OUT_OF_BOUND;
+	data->temp.v1.x = OUT_OF_BOUND;
+	data->temp.v1.y = OUT_OF_BOUND;
+}
+
+int	v_grid_wall_check(t_temp *tmp, t_collide *col, char **grid, t_ivct *v)
+{
+	if (tmp->ray_dir.x > 0)
+		col->grid.x = (int)((col->A.x + 1) / WALL_H);
+	else
+		col->grid.x = (int)((col->A.x - 1) / WALL_H);
+	// if (col->A.y % WALL_H == 63)
+	// {
+	// 	if (tmp->ray_dir.y > 0)
+	// 		col->grid.y = (int)((col->A.y - 1)/ WALL_H);
+	// 	else
+	// 		col->grid.y = (int)((col->A.y + 1)/ WALL_H);
+	// }
+	// else
+		col->grid.y = (int)(col->A.y / WALL_H);
+	if (col->grid.x >= 0 && col->grid.y >= 0
+		&& col->grid.x < col->grid_size.x
+		&& col->grid.y < col->grid_size.y
+		&& grid[col->grid.y][col->grid.x] == '1')
+	{
+		v->x = (int)col->A.x;
+		v->y = (int)col->A.y;
+		return (1);
+	}
+	return (0);
+}
+
+int	v_find_final_intersection(t_temp *tmp, t_collide *col, char **grid, t_ivct *v)
+{
+	while ((col->A.x < (col->grid_size.x * WALL_H) && col->A.x >= 0)
+		&& (col->A.y < (col->grid_size.y * WALL_H) && col->A.y >= 0))
+	{
+		col->A.x += col->X_a;
+		col->A.y += col->Y_a;
+		if (v_grid_wall_check(tmp, col, grid, v))
+			return (1);
+	}
+	return (0);
 }
 
 /*	Checking Vertical Intersections	*/
-void	find_vertical(t_player *ply, t_temp *temp,
-		t_collide *col, char **grid)
+void	find_vertical(t_data *data, char **grid)
 {
-	temp->v2.hit = VERTICAL;
-	col->alpha = atan(temp->ray_dir.y / temp->ray_dir.x);
-	find_first_intersection(ply, temp, col, VERTICAL);
-	if (fabs(((60 / SCREEN_W) * M_PI / 180) - temp->ray_dir.x) < __FLT_EPSILON__)
+	data->temp.v2.hit = VERTICAL;
+	data->col.alpha = atan(data->temp.ray_dir.y / data->temp.ray_dir.x);
+	if (data->temp.ray_dir.x > 0)
+		data->col.A.x = (int)(data->player.pos.x / WALL_H) * WALL_H + 64;
+	else if (data->temp.ray_dir.x < 0)
+		data->col.A.x = (int)(data->player.pos.x / WALL_H) * WALL_H;
+	if (fabs(((60 / SCREEN_W) * M_PI / 180) - data->temp.ray_dir.x) < __FLT_EPSILON__)
 	{
-		temp->v2.x = OUT_OF_BOUND;
-		temp->v2.y = OUT_OF_BOUND;
+		data->temp.v2.x = OUT_OF_BOUND;
+		data->temp.v2.y = OUT_OF_BOUND;
 		return ;
 	}
-	col->A.y = ply->pos.y + (ply->pos.x - col->A.x) * tan(col->alpha);
-	if (grid_wall_check(col, grid, &temp->v2))
+	data->col.A.y = data->player.pos.y + (int)(data->player.pos.x - data->col.A.x) * tan(data->col.alpha);
+	// printf("At grid <%d,%d>\n", data->col.A.x, data->col.A.y);
+	// printf("At grid <%d,%d>\n", data->col.A.x / 64, data->col.A.y / 64);
+	if (v_grid_wall_check(&data->temp, &data->col, grid, &data->temp.v2))
 		return ;
-	if (temp->ray_dir.x > 0)
-		col->X_a = WALL_H;
+	if (data->temp.ray_dir.x > 0)
+		data->col.X_a = WALL_H;
 	else
-		col->X_a = -WALL_H;
-	col->Y_a = -col->X_a * tan(col->alpha);
-	if (find_final_intersection(col, &temp->v2, grid))
+		data->col.X_a = -WALL_H;
+	data->col.Y_a = (int)(-data->col.X_a * tan(data->col.alpha));
+	if (v_find_final_intersection(&data->temp, &data->col, grid, &data->temp.v2))
 		return ;
-	temp->v2.x = OUT_OF_BOUND;
-	temp->v2.y = OUT_OF_BOUND;
+	// printf("here\n");
+	data->temp.v2.x = OUT_OF_BOUND;
+	data->temp.v2.y = OUT_OF_BOUND;
 }

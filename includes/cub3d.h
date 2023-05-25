@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/16 16:54:14 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/25 17:59:17 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define WEST 666
 
 //	Pixels
-# define MOVE_SPEED 2
+# define MOVE_SPEED 8
 //	Degrees
 # define TURN_SPEED	4
 
@@ -121,7 +121,9 @@ typedef struct s_temp
 	t_ivct	v1;
 	t_ivct	v2;
 	t_ivct	final;
+	t_ivct	facing;
 	t_dvct	ray_dir;
+	int		last_drawn;
 }	t_temp;
 
 //	pre-defined attributes
@@ -169,17 +171,12 @@ typedef struct s_data
 }	t_data;
 
 void	initialize(t_data *data);
-void	raytracer(t_data *data, char **grid, int tick);
+void	raytracer(t_data *data, char **grid);
 
 // Ray_find_wall Functions
-t_ivct	ray_find_wall(t_data *data, char **grid);
-void	find_horizontal(t_player *ply, t_temp *temp,
-			t_collide *col, char **grid);
-void	find_vertical(t_player *ply, t_temp *temp,
-			t_collide *col, char **grid);
-int		grid_wall_check(t_collide *col, char **grid, t_ivct *v);
-void	find_first_intersection(t_player *ply, t_temp *temp, t_collide *col, int dir);
-int		find_final_intersection(t_collide *col, t_ivct *v, char **grid);
+void	find_horizontal(t_data *data, char **grid);
+void	find_vertical(t_data *data, char **grid);
+int		h_grid_wall_check(t_temp *tmp, t_collide *col, char **grid, t_ivct *v);
 
 // Fill Wall Info Functions
 void	get_player_dir(t_temp *temp, t_player *player);
