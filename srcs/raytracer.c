@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/26 17:13:15 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/26 17:17:30 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ void	raytracer(t_data *data, char **grid)
 	x = -1;
 	data->temp.ray_dir = rotate_vector((data->info.player_fov / 2)
 			* M_PI / 180, data->player.dir);
-	// data->temp.ray_dir.x = 0.153808;
-	// data->temp.ray_dir.y = -0.988101;
 	while (++x < SCREEN_W)
 	{
 		data->temp.ray_dir = rotate_vector(-data->info.angle_between_rays,
