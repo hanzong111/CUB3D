@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/25 18:29:41 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/26 14:54:14 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	move_player_coordinates(t_data *data, int keycode, t_dvct dir)
 	y = MOVE_SPEED * sin(alpha);
 	data->temp.ray_dir = dir;
 	get_player_dir(&data->temp, &data->player);
-	if (keycode == 's' || keycode == 'd')
+	if (keycode == S_KEY || keycode == D_KEY)
 	{
 		x *= -1;
 		y *= -1;
@@ -52,23 +52,23 @@ void	move_player_coordinates(t_data *data, int keycode, t_dvct dir)
 
 int	event(int keycode, t_data *data)
 {
-	if (keycode == 65307)
+	if (keycode == ESC_KEY)
 	{
 		ft_printf("Esc pressed.\n");
 		ft_printf("Exiting so_long ...\n");
 		exit(0);
 	}
-	if (keycode == 'w' || keycode == 's')
+	if (keycode == W_KEY || keycode == S_KEY)
 		move_player_coordinates(data, keycode, data->player.dir);
-	if (keycode == 'a' || keycode == 'd')
+	if (keycode == A_KEY || keycode == D_KEY)
 		move_player_coordinates(data, keycode,
 			rotate_vector(M_PI / 2, data->player.dir));
-	if (keycode == 65361)
+	if (keycode == LEFT_ARROW)
 		data->player.dir = rotate_vector((TURN_SPEED)
-			* M_PI / 180, data->player.dir);
-	if (keycode == 65363)
+				* M_PI / 180, data->player.dir);
+	if (keycode == RIGHT_ARROW)
 		data->player.dir = rotate_vector(-(TURN_SPEED)
-			* M_PI / 180, data->player.dir);
+				* M_PI / 180, data->player.dir);
 	return (0);
 }
 
@@ -188,7 +188,7 @@ int	main(int argc, char **argv)
 	data.grid[5] = ft_strdup("100000001");
 	data.grid[6] = ft_strdup("1000P0001");
 	data.grid[7] = ft_strdup("100000001");
-	data.grid[8] = ft_strdup("100000001");
+	data.grid[8] = ft_strdup("111111111");
 	data.grid[9] = ft_strdup("100000001");
 	data.grid[10] = ft_strdup("100001001");
 	data.grid[11] = ft_strdup("100001101");

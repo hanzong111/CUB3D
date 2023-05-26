@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/25 17:59:17 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/26 14:47:08 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 //	Pixels
 # define MOVE_SPEED 8
 //	Degrees
-# define TURN_SPEED	4
+# define TURN_SPEED	10
 
 # define DEF "\033[0;39m"
 # define RED "\033[0;91m"
@@ -52,6 +52,23 @@
 
 # define EXIT_CLOSED 1
 # define EXIT_OPENED 2
+
+//	Keys
+// # define W 'w'
+// # define A 'a'
+// # define S 's'
+// # define D 'd'
+// # define ESC_KEY 65307
+// # define LEFT_ARROW 65361
+// # define RIGHT_ARROW 65363
+
+# define W_KEY 13
+# define A_KEY 0
+# define S_KEY 1
+# define D_KEY 2
+# define ESC_KEY 53
+# define LEFT_ARROW 123
+# define RIGHT_ARROW 124
 
 // Event definition
 # define ON_DESTROY 17
@@ -82,11 +99,11 @@ typedef struct s_player
 //	Collision Struct
 typedef struct s_collide
 {
-	t_ivct	A;
+	t_dvct	A;
 	t_ivct	grid;
 	t_ivct	grid_size;
-	int		X_a;
-	int		Y_a;
+	double	X_a;
+	double	Y_a;
 	double	alpha;
 	double	angle_per_line;
 }	t_collide;
