@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/26 17:17:30 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/26 17:18:44 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,12 @@ t_ivct	ray_find_wall(t_data *data, char **grid, t_temp temp)
 
 	find_horizontal(data, grid);
 	find_vertical(data, grid);
-	// printf("====d1====\n");
-	// printf("unit : <%d,%d>\n", data->temp.v1.x, data->temp.v1.y);
-	// printf("grid : <%d,%d>\n", data->temp.v1.x / 64, data->temp.v1.y / 64);
-	
-	// printf("====d2====\n");
-	// printf("unit : <%d,%d>\n", data->temp.v2.x, data->temp.v2.y);
-	// printf("grid : <%d,%d>\n", data->temp.v2.x / 64, data->temp.v2.y / 64);
-	
 	if (data->temp.v1.x == OUT_OF_BOUND && data->temp.v2.y == OUT_OF_BOUND)
 		return (data->temp.v2);
 	else if (data->temp.v2.x == OUT_OF_BOUND && data->temp.v2.y == OUT_OF_BOUND)
 		return (data->temp.v1);
 	horizontal = calculate_distance(data->player.pos, data->temp.v1);
 	vertical = calculate_distance(data->player.pos, data->temp.v2);
-	// printf("====d1====\n");
-	// printf("unit : <%d,%d>\n", data->temp.v1.x, data->temp.v1.y);
-	// printf("grid : <%d,%d>\n", data->temp.v1.x / 64, data->temp.v1.y / 64);
-	// printf("distance : %f\n", d1);
-	// printf("====d2====\n");
-	// printf("unit : <%d,%d>\n", data->temp.v2.x, data->temp.v2.y);
-	// printf("grid : <%d,%d>\n", data->temp.v2.x / 64, data->temp.v2.y / 64);
-	// printf("distance : %f\n", d2);
-	(void)temp;
 	if (fabs(horizontal - vertical) < __FLT_EPSILON__)
 	{
 		if (temp.ray_dir.x > 0 && temp.ray_dir.y > 0)
