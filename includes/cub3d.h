@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/26 17:15:08 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/26 18:17:25 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,21 @@
 # define EXIT_OPENED 2
 
 //	Keys
-// # define W 'w'
-// # define A 'a'
-// # define S 's'
-// # define D 'd'
-// # define ESC_KEY 65307
-// # define LEFT_ARROW 65361
-// # define RIGHT_ARROW 65363
+# define W_KEY 'w'
+# define A_KEY 'a'
+# define S_KEY 's'
+# define D_KEY 'd'
+# define ESC_KEY 65307
+# define LEFT_ARROW 65361
+# define RIGHT_ARROW 65363
 
-# define W_KEY 13
-# define A_KEY 0
-# define S_KEY 1
-# define D_KEY 2
-# define ESC_KEY 53
-# define LEFT_ARROW 123
-# define RIGHT_ARROW 124
+// # define W_KEY 13
+// # define A_KEY 0
+// # define S_KEY 1
+// # define D_KEY 2
+// # define ESC_KEY 53
+// # define LEFT_ARROW 123
+// # define RIGHT_ARROW 124
 
 // Event definition
 # define ON_DESTROY 17

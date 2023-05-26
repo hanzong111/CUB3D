@@ -6,7 +6,7 @@
 #    By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/14 20:26:19 by ojing-ha          #+#    #+#              #
-#    Updated: 2023/05/25 17:57:15 by ojing-ha         ###   ########.fr        #
+#    Updated: 2023/05/26 18:15:16 by ojing-ha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,6 @@ SRC_FILES	= cub3d_main\
 				raytracer\
 				ray_find_wall\
 				vector_operations_1\
-				vector_operations_2\
 				print_functions\
 				fill_wall_info\
 
