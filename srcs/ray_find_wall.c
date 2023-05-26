@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 15:43:46 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/26 14:57:03 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/26 17:09:49 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	find_horizontal(t_data *data, char **grid)
 		data->col.A.y = (int)(data->player.pos.y / WALL_H) * WALL_H;
 	else if (data->temp.ray_dir.y < 0)
 		data->col.A.y = (int)(data->player.pos.y / WALL_H) * WALL_H + 64;
-	else if (fabs(((60 / SCREEN_W) * M_PI / 180) - data->temp.ray_dir.y) < __FLT_EPSILON__)
+	else if (fabs(((data->info.player_fov / SCREEN_W) * M_PI / 180) - data->temp.ray_dir.y) < __FLT_EPSILON__)
 	{
 		data->temp.v1.x = OUT_OF_BOUND;
 		data->temp.v1.y = OUT_OF_BOUND;
@@ -131,7 +131,7 @@ void	find_vertical(t_data *data, char **grid)
 		data->col.A.x = (int)(data->player.pos.x / WALL_H) * WALL_H + 64;
 	else if (data->temp.ray_dir.x < 0)
 		data->col.A.x = (int)(data->player.pos.x / WALL_H) * WALL_H;
-	else if (fabs(((60 / SCREEN_W) * M_PI / 180) - data->temp.ray_dir.x) < __FLT_EPSILON__)
+	else if (fabs(((data->info.player_fov / SCREEN_W) * M_PI / 180) - data->temp.ray_dir.x) < __FLT_EPSILON__)
 	{
 		data->temp.v2.x = OUT_OF_BOUND;
 		data->temp.v2.y = OUT_OF_BOUND;

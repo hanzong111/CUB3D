@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/26 14:47:08 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/26 17:15:08 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@
 # include <fcntl.h>
 # include <math.h>
 // Dont Change This :(
-# define SCREEN_W 1024
-# define SCREEN_H 768
+# define SCREEN_W 1600
+# define SCREEN_H 960
 # define WALL_H 64
+
 # define OUT_OF_BOUND 99999
 # define HORIZONTAL 80
 # define VERTICAL 90
