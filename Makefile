@@ -6,7 +6,7 @@
 #    By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/14 20:26:19 by ojing-ha          #+#    #+#              #
-#    Updated: 2023/05/26 18:15:16 by ojing-ha         ###   ########.fr        #
+#    Updated: 2023/05/30 17:30:43 by ojing-ha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,8 @@ SRC_FILES	= cub3d_main\
 				vector_operations_1\
 				print_functions\
 				fill_wall_info\
+				sprites\
+				texture\
 
 SRCS	= $(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJS	= $(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRC_FILES)))
@@ -54,7 +56,7 @@ all		:
 		@echo "$(MAGENTA) --------------------------INSIDE SO_LONG-------------------------- $(CYAN)"
 		@echo "\n"
 		make $(NAME)
-		@echo "$(YELLOW)Done Creating ./so_long$(DEF_COLOR)"
+		@echo "$(YELLOW)Done Creating ./cub3d$(DEF_COLOR)"
 		@echo "\n"
 		@echo "$(GREEN) -------------$(RED)I $(CYAN)AM $(GREEN)DONE $(YELLOW)MADAFAKA$(GREEN)-------------------------- $(DEF_COLOR)"
 

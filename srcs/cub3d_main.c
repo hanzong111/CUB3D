@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/26 16:11:16 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:20:07 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_rgb	get_color(t_wallinfo wall, t_render r)
 		return (r.west);
 }
 
-int	get_start_pixel(int	projected_h)
+int	get_start_pixel_color(int	projected_h)
 {
 	if (projected_h >= SCREEN_H)
 		return (0);
@@ -112,31 +112,7 @@ void	draw_walls(t_rgb color, t_data_addr d, int	height, int width)
 	}
 }
 
-void	draw_sky_floor(t_render *render, t_data_addr d)
-{
-	t_rgb	color;
-	int		x;
-	int		y;
-
-	y = -1;
-	while (++y < SCREEN_H)
-	{
-		if (y < (SCREEN_H / 2))
-			color = render->sky;
-		else
-			color = render->floor;
-		x = -1;
-		while (++x < SCREEN_W)
-		{
-			d.address[y * d.size_line + x * d.pixel_bits / 8] = color.b;
-			d.address[y * d.size_line + x * d.pixel_bits / 8 + 1] = color.g;
-			d.address[y * d.size_line + x * d.pixel_bits / 8 + 2] = color.r;
-		}
-	}
-
-}
-
-void	render(t_data *data)
+void	render_simple_color(t_data *data)
 {
 	int			x;
 	int			start_pixel;
@@ -150,7 +126,7 @@ void	render(t_data *data)
 	while (++x < SCREEN_W)
 	{
 		color = get_color(data->wall_info[x], data->render);
-		start_pixel = get_start_pixel(data->wall_info[x].projected_h);
+		start_pixel = get_start_pixel_color(data->wall_info[x].projected_h);
 		while (start_pixel < SCREEN_H && data->wall_info[x].projected_h >= 0)
 		{
 		des.address[start_pixel * des.size_line + x * des.pixel_bits / 8] = color.b;
@@ -160,7 +136,6 @@ void	render(t_data *data)
 		data->wall_info[x].projected_h--;
 		}
 	}
-
 }
 
 int	render_next_frame(t_data *data)
@@ -170,8 +145,9 @@ int	render_next_frame(t_data *data)
 	tick++;
 	(void)tick;
 	raytracer(data, data->grid);
-	render(data);
-	mlx_put_image_to_window(data->mlx, data->window, data->final_img.img, 0, 0);
+	// render_simple_color(data);
+	render_texture(data);
+	mlx_put_image_to_window(data->mlx, data->window, data->final_img.img, 0, 0); 
 	return (0);
 }
 
@@ -209,6 +185,7 @@ int	main(int argc, char **argv)
 	
 	data.mlx = mlx_init();
 	data.window = mlx_new_window(data.mlx, SCREEN_W, SCREEN_H, "CUB3D");
+	get_sprites(&data);
 	data.final_img.img = mlx_new_image(data.mlx, SCREEN_W, SCREEN_H);
 	data.final_img.w = SCREEN_W;
 	data.final_img.h = SCREEN_H;

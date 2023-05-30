@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/26 18:17:25 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/30 17:30:30 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,14 @@ typedef struct s_temp
 	int		last_drawn;
 }	t_temp;
 
+typedef struct s_sprites
+{
+	t_img	n_img;
+	t_img	s_img;
+	t_img	e_img;
+	t_img	w_img;
+}	t_sprites;
+
 //	pre-defined attributes
 typedef struct s_info
 {
@@ -186,6 +194,7 @@ typedef struct s_data
 	t_info			info;
 	t_render		render;
 	t_img			final_img;
+	t_sprites		sprites;
 }	t_data;
 
 void	initialize(t_data *data);
@@ -214,5 +223,9 @@ void	print_wall_info(t_data *data, int x);
 
 // Render
 void	render(t_data *data);
+void	draw_sky_floor(t_render *render, t_data_addr d);
+void	render_texture(t_data *data);
 
+// Sprites
+void	get_sprites(t_data *data);
 #endif
