@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 18:40:05 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/30 18:23:12 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/05/30 22:14:59 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	convert(t_data *data, char *path, t_img *img)
 
 void	get_sprites(t_data *data)
 {
-	convert(data, "sprites/Sharky.xpm", &data->sprites.n_img);
+	convert(data, "sprites/bb.xpm", &data->sprites.n_img);
 	convert(data, "sprites/bb.xpm", &data->sprites.s_img);
-	convert(data, "sprites/2b.xpm", &data->sprites.e_img);
-	convert(data, "sprites/try.xpm", &data->sprites.w_img);
+	convert(data, "sprites/bb.xpm", &data->sprites.e_img);
+	convert(data, "sprites/bb.xpm", &data->sprites.w_img);
 	// convert(data, "sprites/1.xpm", &data->sprites.n_img);
 	// convert(data, "sprites/2.xpm", &data->sprites.s_img);
 	// convert(data, "sprites/3.xpm", &data->sprites.e_img);

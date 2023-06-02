@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/30 18:20:07 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:42:47 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
 /*	S  	  || 1						*/
 /* 	A  	  || 0						*/
 /*	D  	  || 2						*/
+
+int	check_collision(char **grid, int x, int y)
+{
+	if (grid[y / 64][x / 64] == '1')
+		return (0);
+	return (1);
+}
 
 void	move_player_coordinates(t_data *data, int keycode, t_dvct dir)
 {
@@ -40,13 +47,19 @@ void	move_player_coordinates(t_data *data, int keycode, t_dvct dir)
 	}
 	if (data->player.facing.y == NORTH)
 	{
-		data->player.pos.x += x;
-		data->player.pos.y -= y;
+		if (check_collision(data->grid, data->player.pos.x + x, data->player.pos.y - y))
+		{
+			data->player.pos.x += x;
+			data->player.pos.y -= y;
+		}
 	}
 	else
 	{
-		data->player.pos.x += x;
-		data->player.pos.y += y;
+		if (check_collision(data->grid, data->player.pos.x + x, data->player.pos.y + y))
+		{
+			data->player.pos.x += x;
+			data->player.pos.y += y;
+		}
 	}
 }
 
