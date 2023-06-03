@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/06/03 15:35:47 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/06/03 23:17:08 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@
 # define WEST 666
 
 //	Pixels
-# define MOVE_SPEED 15
+# define MOVE_SPEED 10
 //	Degrees
-# define TURN_SPEED	10
+# define TURN_SPEED	4
 
 # define DEF "\033[0;39m"
 # define RED "\033[0;91m"
@@ -57,21 +57,21 @@
 # define EXIT_OPENED 2
 
 //	Keys
-// # define W_KEY 'w'
-// # define A_KEY 'a'
-// # define S_KEY 's'
-// # define D_KEY 'd'
-// # define ESC_KEY 65307
-// # define LEFT_ARROW 65361
-// # define RIGHT_ARROW 65363
+# define W_KEY 'w'
+# define A_KEY 'a'
+# define S_KEY 's'
+# define D_KEY 'd'
+# define ESC_KEY 65307
+# define LEFT_ARROW 65361
+# define RIGHT_ARROW 65363
 
-# define W_KEY 13
-# define A_KEY 0
-# define S_KEY 1
-# define D_KEY 2
-# define ESC_KEY 53
-# define LEFT_ARROW 123
-# define RIGHT_ARROW 124
+// # define W_KEY 13
+// # define A_KEY 0
+// # define S_KEY 1
+// # define D_KEY 2
+// # define ESC_KEY 53
+// # define LEFT_ARROW 123
+// # define RIGHT_ARROW 124
 
 // Event definition
 # define ON_DESTROY 17
@@ -144,6 +144,7 @@ typedef struct s_temp
 	t_ivct	facing;
 	t_dvct	ray_dir;
 	int		last_drawn;
+	int		keycode;
 }	t_temp;
 
 typedef struct s_sprites
