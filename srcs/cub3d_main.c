@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/06/02 15:42:47 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/06/03 15:46:56 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 /*	S  	  || 1						*/
 /* 	A  	  || 0						*/
 /*	D  	  || 2						*/
+/*	keypress = 2					*/
+/*	keyrelease = 3					*/
 
 int	check_collision(char **grid, int x, int y)
 {
@@ -69,6 +71,7 @@ int	event(int keycode, t_data *data)
 	{
 		ft_printf("Esc pressed.\n");
 		ft_printf("Exiting so_long ...\n");
+		system("leaks cub3d");
 		exit(0);
 	}
 	if (keycode == W_KEY || keycode == S_KEY)
@@ -164,6 +167,23 @@ int	render_next_frame(t_data *data)
 	return (0);
 }
 
+int	key_press(int keycode, t_data *data)
+{
+	(void)data;
+	printf("key pressed\n");
+	printf("keycode is : %d\n", keycode);
+	return (0);
+}
+
+int	key_release(int keycode, t_data *data)
+{
+	(void)data;
+
+	printf("key released\n");
+	printf("keycode is : %d\n", keycode);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data			data;
@@ -203,7 +223,10 @@ int	main(int argc, char **argv)
 	data.final_img.w = SCREEN_W;
 	data.final_img.h = SCREEN_H;
 	mlx_loop_hook(data.mlx, render_next_frame, &data);
-	mlx_key_hook(data.window, event, &data);
+	// mlx_key_hook(data.window, event, &data);
+	// mlx_hook(data.window, 2, 0, event, &data);
+	mlx_hook(data.window, 2, 0, key_press, &data);
+	mlx_hook(data.window, 3, 0, key_release, &data);
 	mlx_hook(data.window, ON_DESTROY, 0L, sl_close_window, &data);
 	mlx_loop(data.mlx);
 
