@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/06/03 23:41:06 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/06/07 23:26:48 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,63 +21,48 @@
 /*	keypress = 2					*/
 /*	keyrelease = 3					*/
 
-int	check_collision(char **grid, int x, int y)
+int	check_collision(char **grid, double x, double y)
 {
-	if (grid[y / 64][x / 64] == '1')
+	if (grid[(int)y / 64][(int)x / 64] == '1')
 		return (0);
 	return (1);
 }
 
-void	move_player_coordinates(t_data *data, int keycode, t_dvct dir)
+void	move_player(t_data *data, int keycode)
 {
-	t_dvct	x_axis;
-	double	alpha;
-	int		x;
-	int		y;
+	t_dvct	move_dir;
 
-	x_axis.x = 1;
-	x_axis.y = 0;
-	alpha = angle_between_vectors(dir, x_axis);
-	x = MOVE_SPEED * cos(alpha);
-	y = MOVE_SPEED * sin(alpha);
-	data->temp.ray_dir = dir;
-	get_player_dir(&data->temp, &data->player);
-	if (keycode == S_KEY || keycode == D_KEY)
+	move_dir.x = 0;
+	move_dir.y = 0;
+	if (keycode == W_KEY)
+		move_dir = rotate_vector(0, data->player.dir);
+	else if (keycode == A_KEY)
+		move_dir = rotate_vector(90 * M_PI / 180 , data->player.dir);
+	else if (keycode == D_KEY)
+		move_dir = rotate_vector(-90 * M_PI / 180 , data->player.dir);
+	else if (keycode == S_KEY)
+		move_dir = rotate_vector(180 * M_PI / 180 , data->player.dir);
+	move_dir.x *= MOVE_SPEED;
+	move_dir.y *= MOVE_SPEED;
+	move_dir.y *= -1;
+	if (check_collision(data->grid, (data->player.pos.x + (int)move_dir.x), (data->player.pos.y + (int)move_dir.y)))
 	{
-		x *= -1;
-		y *= -1;
-	}
-	if (data->player.facing.y == NORTH)
-	{
-		if (check_collision(data->grid, data->player.pos.x + x, data->player.pos.y - y))
-		{
-			data->player.pos.x += x;
-			data->player.pos.y -= y;
-		}
-	}
-	else
-	{
-		if (check_collision(data->grid, data->player.pos.x + x, data->player.pos.y + y))
-		{
-			data->player.pos.x += x;
-			data->player.pos.y += y;
-		}
-	}
+		data->player.pos.x = (data->player.pos.x + (int)move_dir.x);
+		data->player.pos.y = (data->player.pos.y + (int)move_dir.y);
+	}	
 }
 
 int	event(int keycode, t_data *data)
 {
+	printf("keycode is %d\n", keycode);
 	if (keycode == ESC_KEY)
 	{
 		ft_printf("Esc pressed.\n");
 		ft_printf("Exiting so_long ...\n");
 		exit(0);
 	}
-	if (keycode == W_KEY || keycode == S_KEY)
-		move_player_coordinates(data, keycode, data->player.dir);
-	if (keycode == A_KEY || keycode == D_KEY)
-		move_player_coordinates(data, keycode,
-			rotate_vector(M_PI / 2, data->player.dir));
+	if (keycode == W_KEY || keycode == S_KEY || keycode == A_KEY || keycode == D_KEY )
+		move_player(data, keycode);
 	if (keycode == LEFT_ARROW)
 		data->player.dir = rotate_vector((TURN_SPEED)
 				* M_PI / 180, data->player.dir);
@@ -155,12 +140,13 @@ void	render_simple_color(t_data *data)
 
 int	render_next_frame(t_data *data)
 {
+	printf("main key is %d\n", data->temp.keycode);
 	if (data->temp.keycode >= 0)
 		event(data->temp.keycode, data);
 	raytracer(data, data->grid);
 	// render_simple_color(data);
 	render_texture(data);
-	mlx_put_image_to_window(data->mlx, data->window, data->final_img.img, 0, 0); 
+	mlx_put_image_to_window(data->mlx, data->window, data->final_img.img, 0, 0);
 	return (0);
 }
 
