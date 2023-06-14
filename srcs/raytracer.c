@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/06/03 15:26:41 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/06/14 23:45:41 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_ivct	ray_find_wall(t_data *data, char **grid, t_temp temp)
 
 	find_horizontal(data, grid);
 	find_vertical(data, grid);
-	if (data->temp.v1.x == OUT_OF_BOUND && data->temp.v2.y == OUT_OF_BOUND)
+	if (data->temp.v1.x == OUT_OF_BOUND && data->temp.v1.y == OUT_OF_BOUND)
 		return (data->temp.v2);
 	else if (data->temp.v2.x == OUT_OF_BOUND && data->temp.v2.y == OUT_OF_BOUND)
 		return (data->temp.v1);
@@ -52,6 +52,11 @@ void	raytracer(t_data *data, char **grid)
 		data->temp.ray_dir = rotate_vector(-data->info.angle_between_rays,
 				data->temp.ray_dir);
 		data->temp.final = ray_find_wall(data, grid, data->temp);
+		if (data->temp.final.x == OUT_OF_BOUND && data->temp.final.y == OUT_OF_BOUND)
+		{
+			printf("Error !!!\n");
+			exit (0);
+		}
 		fill_in_wall_info(data, x);
 		// print_wall_info(data, x);
 	}

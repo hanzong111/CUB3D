@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/06/07 23:26:48 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/06/14 23:48:15 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,11 +140,12 @@ void	render_simple_color(t_data *data)
 
 int	render_next_frame(t_data *data)
 {
-	printf("main key is %d\n", data->temp.keycode);
 	if (data->temp.keycode >= 0)
 		event(data->temp.keycode, data);
 	raytracer(data, data->grid);
 	// render_simple_color(data);
+	// printf("Player is at <%d, %d>\n", data->player.pos.x / 64 , data->player.pos.y / 64);
+	// printf("It is in a %c\n", data->grid[data->player.pos.y / 64][data->player.pos.x / 64]);
 	render_texture(data);
 	mlx_put_image_to_window(data->mlx, data->window, data->final_img.img, 0, 0);
 	return (0);
