@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/06/07 22:30:46 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/08/10 12:20:01 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_player
 	t_ivct	pos;
 	t_dvct	dir;
 	t_ivct	facing;
+	t_dvct	cam_plane;
 }	t_player;
 
 //	Collision Struct
@@ -105,6 +106,7 @@ typedef struct s_collide
 	t_dvct	A;
 	t_ivct	grid;
 	t_ivct	grid_size;
+	int		*row_length;
 	double	X_a;
 	double	Y_a;
 	double	alpha;
@@ -131,9 +133,10 @@ typedef struct s_data_addr
 
 typedef struct s_img
 {
-	void	*img;
-	int		w;
-	int		h;
+	void		*img;
+	int			w;
+	int			h;
+	t_data_addr	addr_data;
 }	t_img;
 
 typedef struct s_temp
@@ -183,6 +186,21 @@ typedef struct s_render
 	t_rgb	floor;
 }	t_render;
 
+typedef struct s_game
+{
+	int			found_player;
+	char		**map;
+}	t_game;
+
+typedef struct s_counter
+{
+	int	n_img;
+	int	s_img;
+	int	e_img;
+	int	w_img;
+	int	sky;
+	int	floor;
+}	t_counter;
 // Main Global Struct 
 typedef struct s_data
 {
@@ -191,6 +209,7 @@ typedef struct s_data
 	char			**grid;
 
 	t_temp			temp;
+	t_game			game;
 	t_player		player;
 	t_collide		col;
 	t_wallinfo		*wall_info;
@@ -198,6 +217,7 @@ typedef struct s_data
 	t_render		render;
 	t_img			final_img;
 	t_sprites		sprites;
+	t_counter		count;
 }	t_data;
 
 void	initialize(t_data *data);
@@ -230,5 +250,35 @@ void	draw_sky_floor(t_render *render, t_data_addr d);
 void	render_texture(t_data *data);
 
 // Sprites
-void	get_sprites(t_data *data);
+// void	get_sprites(t_data *data);
+void	get_sprites(t_data *data, t_img *img, char *path);
+
+// Utils / error_and_quit
+int		ft_strcmp(char *s1, char *s2);
+int		ft_valid_cub_file(char *path);
+void	ft_free_split(char **split);
+void	ft_exit(char *str, int status);
+void	ft_exit_all(t_data *data, char *str, int status);
+
+// check_map_utils.c
+int		ft_get_map_length(char **map);
+int		ft_check_all_one(t_data *data, int i, int j);
+void	get_textures(t_data *data, int fd);
+void	ft_check_everything(t_data *data, char **map, int i, int j);
+void	ft_camera_fov(t_data *data, double dir_y, double plyr_y, double plyr_x);
+
+//check_map.c
+void	ft_check_symbol(t_data *data, char *line);
+void	ft_check_border(char **map, int i, int j);
+void	ft_check_valid_map(t_data *data);
+int		ft_check_player(t_data *data, char **map, int i, int j);
+
+//check_texture_utils.c
+int		ft_check_line(t_data *data, char **split);
+
+//check_textures.c
+int		ft_check_textures(t_data *data);
+void	ft_get_texture_data(t_data *data, int fd);
+void	ft_get_map_data(t_data *data, int fd);
+void	initialize_map(t_data *data, char *path);
 #endif

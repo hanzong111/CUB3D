@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/06/14 23:48:15 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/08/10 12:55:26 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	move_player(t_data *data, int keycode)
 	move_dir.x *= MOVE_SPEED;
 	move_dir.y *= MOVE_SPEED;
 	move_dir.y *= -1;
-	if (check_collision(data->grid, (data->player.pos.x + (int)move_dir.x), (data->player.pos.y + (int)move_dir.y)))
+	if (check_collision(data->game.map, (data->player.pos.x + (int)move_dir.x), (data->player.pos.y + (int)move_dir.y)))
 	{
 		data->player.pos.x = (data->player.pos.x + (int)move_dir.x);
 		data->player.pos.y = (data->player.pos.y + (int)move_dir.y);
@@ -54,7 +54,6 @@ void	move_player(t_data *data, int keycode)
 
 int	event(int keycode, t_data *data)
 {
-	printf("keycode is %d\n", keycode);
 	if (keycode == ESC_KEY)
 	{
 		ft_printf("Esc pressed.\n");
@@ -142,7 +141,7 @@ int	render_next_frame(t_data *data)
 {
 	if (data->temp.keycode >= 0)
 		event(data->temp.keycode, data);
-	raytracer(data, data->grid);
+	raytracer(data, data->game.map);
 	// render_simple_color(data);
 	// printf("Player is at <%d, %d>\n", data->player.pos.x / 64 , data->player.pos.y / 64);
 	// printf("It is in a %c\n", data->grid[data->player.pos.y / 64][data->player.pos.x / 64]);
@@ -171,64 +170,94 @@ int	move_mouse(int x, int y, t_data *data)
 	return (0);
 }
 
+void	convert(t_data *data, char *path, t_img *img)
+{
+	img->img = mlx_xpm_file_to_image(data->mlx, path, &img->w, &img->h);
+	printf("ptr is %p\n", img->img);
+	if (!img->img)
+	{
+		printf("no sprites!!\n");
+		exit (0);
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_data			data;
 
-	data.grid = malloc(sizeof(char *) * 23);
-	data.grid[0] = ft_strdup("111111111");
-	data.grid[1] = ft_strdup("100000001");
-	data.grid[2] = ft_strdup("111000101");
-	data.grid[3] = ft_strdup("101000001");
-	data.grid[4] = ft_strdup("100000001");
-	data.grid[5] = ft_strdup("100000101");
-	data.grid[6] = ft_strdup("1000P0001");
-	data.grid[7] = ft_strdup("100000001");
-	data.grid[8] = ft_strdup("100001001");
-	data.grid[9] = ft_strdup("100000001");
-	data.grid[10] = ft_strdup("100001001");
-	data.grid[11] = ft_strdup("100001101");
-	data.grid[12] = ft_strdup("100000001");
-	data.grid[13] = ft_strdup("101000001");
-	data.grid[14] = ft_strdup("100000001");
-	data.grid[15] = ft_strdup("100100001");
-	data.grid[16] = ft_strdup("100000001");
-	data.grid[17] = ft_strdup("100010001");
-	data.grid[18] = ft_strdup("100000001");
-	data.grid[19] = ft_strdup("100000001");
-	data.grid[20] = ft_strdup("100100001");
-	data.grid[21] = ft_strdup("111111111");
-	data.grid[22] = NULL;
-	initialize(&data);
-	(void)argc;
-	(void)argv;
+data.game.map = malloc(sizeof(char *) * 23);
+	data.game.map[0] = ft_strdup("111111111111");
+	data.game.map[1] = ft_strdup("1000001100001");
+	data.game.map[2] = ft_strdup("111001111100111111111111");
+	data.game.map[3] = ft_strdup("101001   100000000000011");
+	data.game.map[4] = ft_strdup("100001111100000000000001");
+	data.game.map[5] = ft_strdup("100000000000000000000001");
+	data.game.map[6] = ft_strdup("1000W0001111111111111111");
+	data.game.map[7] = ft_strdup("100000001");
+	data.game.map[8] = ft_strdup("100001001");
+	data.game.map[9] = ft_strdup("100000001");
+	data.game.map[10] = ft_strdup("100001001");
+	data.game.map[11] = ft_strdup("100001101");
+	data.game.map[12] = ft_strdup("100000001");
+	data.game.map[13] = ft_strdup("101000001");
+	data.game.map[14] = ft_strdup("100000001");
+	data.game.map[15] = ft_strdup("100100001");
+	data.game.map[16] = ft_strdup("100000001");
+	data.game.map[17] = ft_strdup("100010001");
+	data.game.map[18] = ft_strdup("100000001");
+	data.game.map[19] = ft_strdup("100000001");
+	data.game.map[20] = ft_strdup("100100001");
+	data.game.map[21] = ft_strdup("111111111");
+	data.game.map[22] = NULL;
+
+	data.render.sky.r = -1;
+	data.render.sky.g = -1;
+	data.render.sky.b = -1;
+	data.render.floor.r = -1;
+	data.render.floor.g = -1;
+	data.render.floor.b = -1;
+	data.sprites.n_img.img = NULL;
+	data.sprites.s_img.img = NULL;
+	data.sprites.e_img.img = NULL;
+	data.sprites.w_img.img = NULL;
+	data.count.n_img = 0;
+	data.count.s_img = 0;
+	data.count.e_img = 0;
+	data.count.w_img = 0;
+	data.count.sky = 0;
+	data.count.floor = 0;
 	
 	data.mlx = mlx_init();
 	data.window = mlx_new_window(data.mlx, SCREEN_W, SCREEN_H, "CUB3D");
-	get_sprites(&data);
+	initialize_map(&data, argv[1]);
+	initialize(&data);
+	(void)argc;
+	(void)argv;
+
+	// get_sprites(&data);
 	data.final_img.img = mlx_new_image(data.mlx, SCREEN_W, SCREEN_H);
 	data.final_img.w = SCREEN_W;
 	data.final_img.h = SCREEN_H;
 	mlx_loop_hook(data.mlx, render_next_frame, &data);
-	mlx_hook(data.window, 2, 1L<<0, key_press, &data);
-	mlx_hook(data.window, 3, 1L<<1, key_release, &data);
+	mlx_hook(data.window, 2, 1L << 0, key_press, &data);
+	mlx_hook(data.window, 3, 1L << 1, key_release, &data);
 	mlx_hook(data.window, ON_DESTROY, 0L, sl_close_window, &data);
-	// mlx_hook(data.window, 6, 0, move_mouse, &data);
-	// mlx_mouse_move(data.mlx, data.window, 4, 4);
 	mlx_loop(data.mlx);
-
-	// data.mlx = mlx_init();
-	// data.window = mlx_new_window(data.mlx, SCREEN_W, SCREEN_H, "CUB3D");
-	// data.final_img.img = mlx_new_image(data.mlx, SCREEN_W, SCREEN_H);
-	// data.final_img.w = SCREEN_W;
-	// data.final_img.h = SCREEN_H;
-	// raytracer(&data, data.grid);
-	// render(&data);
-	// mlx_put_image_to_window(data.mlx, data.window, data.final_img.img, 0, 0);
-	// int x = -1;
-	// while (++x <= 22)
-	// 	free(data.grid[x]);
-	// free(data.grid);
-	// free(data.wall_info);
-	// mlx_loop(data.mlx);
 }
+// mlx_hook(data.window, 6, 0, move_mouse, &data);
+// mlx_mouse_move(data.mlx, data.window, 4, 4);
+
+// data.mlx = mlx_init();
+// data.window = mlx_new_window(data.mlx, SCREEN_W, SCREEN_H, "CUB3D");
+// data.final_img.img = mlx_new_image(data.mlx, SCREEN_W, SCREEN_H);
+// data.final_img.w = SCREEN_W;
+// data.final_img.h = SCREEN_H;
+// raytracer(&data, data.grid);
+// render(&data);
+// mlx_put_image_to_window(data.mlx, data.window, data.final_img.img, 0, 0);
+// int x = -1;
+// while (++x <= 22)
+// 	free(data.grid[x]);
+// free(data.grid);
+// free(data.wall_info);
+// mlx_loop(data.mlx);

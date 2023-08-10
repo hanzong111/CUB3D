@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 15:57:59 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/26 17:12:18 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/08/10 12:41:45 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 
 void	map_size(t_collide *col, char **grid)
 {
-	col->grid_size.x = ft_strlen(grid[0]);
+	int	i;
+
 	col->grid_size.y = 0;
 	while (grid[col->grid_size.y] != NULL)
 		col->grid_size.y++;
+	printf("row height is %d\n", col->grid_size.y);
+	col->row_length = malloc(sizeof(int) * col->grid_size.y);
+	i = -1;
+	while(++i < col->grid_size.y)
+		col->row_length[i] = ft_strlen(grid[i]);
 }
 
 void	initialize(t_data *data)
@@ -32,8 +38,8 @@ void	initialize(t_data *data)
 	/*	Will be input in the future	*/
 	data->player.pos.x = 4 * WALL_H + (WALL_H / 2);
 	data->player.pos.y = 6 * WALL_H + (WALL_H / 2);
-	data->player.dir.x = 0;
-	data->player.dir.y = -1;
+	// data->player.dir.x = 0;
+	// data->player.dir.y = -1;
 
 	/*	Red	*/
 	data->render.north.r = 255;
@@ -55,12 +61,12 @@ void	initialize(t_data *data)
 	data->render.west.g = 153;
 	data->render.west.b = 255;
 
-	data->render.sky.r = 153;
-	data->render.sky.g = 255;
-	data->render.sky.b = 255;
+	// data->render.sky.r = 153;
+	// data->render.sky.g = 255;
+	// data->render.sky.b = 255;
 
-	data->render.floor.r = 255;
-	data->render.floor.g = 255;
-	data->render.floor.b = 153;
-	map_size(&data->col, data->grid);
+	// data->render.floor.r = 255;
+	// data->render.floor.g = 255;
+	// data->render.floor.b = 153;
+	map_size(&data->col, data->game.map);
 }

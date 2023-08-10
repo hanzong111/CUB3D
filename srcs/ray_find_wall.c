@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 15:43:46 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/05/26 17:20:38 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/08/10 12:43:55 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	h_grid_wall_check(t_temp *tmp, t_collide *col, char **grid, t_ivct *v)
 		col->grid.y = (int)((col->A.y + 1) / WALL_H);
 	col->grid.x = (int)(col->A.x / WALL_H);
 	if (col->grid.x >= 0 && col->grid.y >= 0
-		&& col->grid.x < col->grid_size.x
 		&& col->grid.y < col->grid_size.y
+		&& col->grid.x < col->row_length[col->grid.y]
 		&& grid[col->grid.y][col->grid.x] == '1')
 	{
 		v->x = (int)col->A.x;
@@ -48,15 +48,24 @@ int	h_grid_wall_check(t_temp *tmp, t_collide *col, char **grid, t_ivct *v)
 int	h_find_final_intersection(t_temp *tmp,
 	t_collide *col, char **grid, t_ivct *v)
 {
-	while (((int)(col->A.x) < (col->grid_size.x * WALL_H)
-		&& (int)(col->A.x) >= 0)
-		&& ((int)(col->A.y)< (col->grid_size.y * WALL_H)
-		&& (int)(col->A.y)>= 0))
+	if (tmp->ray_dir.y > 0)
+		col->grid.y = (int)((col->A.y - 1) / WALL_H);
+	else
+		col->grid.y = (int)((col->A.y + 1) / WALL_H);
+	col->grid.x = (int)(col->A.x / WALL_H);
+	while ((int)(col->A.x) >= 0 && (int)(col->A.y)>= 0 
+		&& (int)(col->A.y)< (col->grid_size.y * WALL_H)
+		&& (int)(col->A.x) < (col->row_length[col->grid.y] * WALL_H))
 	{
 		col->A.x += col->X_a;
 		col->A.y += col->Y_a;
 		if (h_grid_wall_check(tmp, col, grid, v))
 			return (1);
+		if (tmp->ray_dir.y > 0)
+			col->grid.y = (int)((col->A.y - 1) / WALL_H);
+		else
+			col->grid.y = (int)((col->A.y + 1) / WALL_H);
+		col->grid.x = (int)(col->A.x / WALL_H);
 	}
 	return (0);
 }
@@ -101,8 +110,8 @@ int	v_grid_wall_check(t_temp *tmp, t_collide *col, char **grid, t_ivct *v)
 		col->grid.x = (int)((col->A.x - 1) / WALL_H);
 	col->grid.y = (int)(col->A.y / WALL_H);
 	if (col->grid.x >= 0 && col->grid.y >= 0
-		&& col->grid.x < col->grid_size.x
 		&& col->grid.y < col->grid_size.y
+		&& col->grid.x < col->row_length[col->grid.y]
 		&& grid[col->grid.y][col->grid.x] == '1')
 	{
 		v->x = (int)col->A.x;
@@ -115,15 +124,24 @@ int	v_grid_wall_check(t_temp *tmp, t_collide *col, char **grid, t_ivct *v)
 int	v_find_final_intersection(t_temp *tmp, t_collide *col,
 		char **grid, t_ivct *v)
 {
-	while (((int)(col->A.x) < (col->grid_size.x * WALL_H)
-		&& (int)(col->A.x) >= 0)
-		&& ((int)(col->A.y)< (col->grid_size.y * WALL_H)
-		&& (int)(col->A.y)>= 0))
+	if (tmp->ray_dir.x > 0)
+		col->grid.x = (int)((col->A.x + 1) / WALL_H);
+	else
+		col->grid.x = (int)((col->A.x - 1) / WALL_H);
+	col->grid.y = (int)(col->A.y / WALL_H);
+	while ((int)(col->A.x) >= 0 && (int)(col->A.y)>= 0 
+		&& (int)(col->A.y)< (col->grid_size.y * WALL_H)
+		&& (int)(col->A.x) < (col->row_length[col->grid.y] * WALL_H))
 	{
 		col->A.x += col->X_a;
 		col->A.y += col->Y_a;
 		if (v_grid_wall_check(tmp, col, grid, v))
 			return (1);
+		if (tmp->ray_dir.x > 0)
+			col->grid.x = (int)((col->A.x + 1) / WALL_H);
+		else
+			col->grid.x = (int)((col->A.x - 1) / WALL_H);
+		col->grid.y = (int)(col->A.y / WALL_H);
 	}
 	return (0);
 }

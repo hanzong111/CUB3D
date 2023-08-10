@@ -6,7 +6,7 @@
 #    By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/14 20:26:19 by ojing-ha          #+#    #+#              #
-#    Updated: 2023/05/30 17:30:43 by ojing-ha         ###   ########.fr        #
+#    Updated: 2023/08/02 13:00:11 by ojing-ha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,11 @@ SRC_FILES	= cub3d_main\
 				fill_wall_info\
 				sprites\
 				texture\
+				check_map_utils\
+				check_map\
+				check_texture_utils\
+				check_textures\
+				error_and_quit\
 
 SRCS	= $(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJS	= $(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRC_FILES)))
