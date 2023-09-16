@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/08/10 12:55:26 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/16 21:43:44 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,30 +185,30 @@ int	main(int argc, char **argv)
 {
 	t_data			data;
 
-data.game.map = malloc(sizeof(char *) * 23);
-	data.game.map[0] = ft_strdup("111111111111");
-	data.game.map[1] = ft_strdup("1000001100001");
-	data.game.map[2] = ft_strdup("111001111100111111111111");
-	data.game.map[3] = ft_strdup("101001   100000000000011");
-	data.game.map[4] = ft_strdup("100001111100000000000001");
-	data.game.map[5] = ft_strdup("100000000000000000000001");
-	data.game.map[6] = ft_strdup("1000W0001111111111111111");
-	data.game.map[7] = ft_strdup("100000001");
-	data.game.map[8] = ft_strdup("100001001");
-	data.game.map[9] = ft_strdup("100000001");
-	data.game.map[10] = ft_strdup("100001001");
-	data.game.map[11] = ft_strdup("100001101");
-	data.game.map[12] = ft_strdup("100000001");
-	data.game.map[13] = ft_strdup("101000001");
-	data.game.map[14] = ft_strdup("100000001");
-	data.game.map[15] = ft_strdup("100100001");
-	data.game.map[16] = ft_strdup("100000001");
-	data.game.map[17] = ft_strdup("100010001");
-	data.game.map[18] = ft_strdup("100000001");
-	data.game.map[19] = ft_strdup("100000001");
-	data.game.map[20] = ft_strdup("100100001");
-	data.game.map[21] = ft_strdup("111111111");
-	data.game.map[22] = NULL;
+// data.game.map = malloc(sizeof(char *) * 23);
+// 	data.game.map[0] = ft_strdup("111111111111");
+// 	data.game.map[1] = ft_strdup("1000001100001");
+// 	data.game.map[2] = ft_strdup("111001111100111111111111");
+// 	data.game.map[3] = ft_strdup("101001   100000000000011");
+// 	data.game.map[4] = ft_strdup("100001111100000000000001");
+// 	data.game.map[5] = ft_strdup("100000000000000000000001");
+// 	data.game.map[6] = ft_strdup("1000W0001111111111111111");
+// 	data.game.map[7] = ft_strdup("100000001");
+// 	data.game.map[8] = ft_strdup("100001001");
+// 	data.game.map[9] = ft_strdup("100000001");
+// 	data.game.map[10] = ft_strdup("100001001");
+// 	data.game.map[11] = ft_strdup("100001101");
+// 	data.game.map[12] = ft_strdup("100000001");
+// 	data.game.map[13] = ft_strdup("101000001");
+// 	data.game.map[14] = ft_strdup("100000001");
+// 	data.game.map[15] = ft_strdup("100100001");
+// 	data.game.map[16] = ft_strdup("100000001");
+// 	data.game.map[17] = ft_strdup("100010001");
+// 	data.game.map[18] = ft_strdup("100000001");
+// 	data.game.map[19] = ft_strdup("100000001");
+// 	data.game.map[20] = ft_strdup("100100001");
+// 	data.game.map[21] = ft_strdup("111111111");
+// 	data.game.map[22] = NULL;
 
 	data.render.sky.r = -1;
 	data.render.sky.g = -1;
@@ -228,21 +228,21 @@ data.game.map = malloc(sizeof(char *) * 23);
 	data.count.floor = 0;
 	
 	data.mlx = mlx_init();
-	data.window = mlx_new_window(data.mlx, SCREEN_W, SCREEN_H, "CUB3D");
+	// data.window = mlx_new_window(data.mlx, SCREEN_W, SCREEN_H, "CUB3D");
 	initialize_map(&data, argv[1]);
 	initialize(&data);
 	(void)argc;
 	(void)argv;
 
 	// get_sprites(&data);
-	data.final_img.img = mlx_new_image(data.mlx, SCREEN_W, SCREEN_H);
-	data.final_img.w = SCREEN_W;
-	data.final_img.h = SCREEN_H;
-	mlx_loop_hook(data.mlx, render_next_frame, &data);
-	mlx_hook(data.window, 2, 1L << 0, key_press, &data);
-	mlx_hook(data.window, 3, 1L << 1, key_release, &data);
-	mlx_hook(data.window, ON_DESTROY, 0L, sl_close_window, &data);
-	mlx_loop(data.mlx);
+	// data.final_img.img = mlx_new_image(data.mlx, SCREEN_W, SCREEN_H);
+	// data.final_img.w = SCREEN_W;
+	// data.final_img.h = SCREEN_H;
+	// mlx_loop_hook(data.mlx, render_next_frame, &data);
+	// mlx_hook(data.window, 2, 1L << 0, key_press, &data);
+	// mlx_hook(data.window, 3, 1L << 1, key_release, &data);
+	// mlx_hook(data.window, ON_DESTROY, 0L, sl_close_window, &data);
+	// mlx_loop(data.mlx);
 }
 // mlx_hook(data.window, 6, 0, move_mouse, &data);
 // mlx_mouse_move(data.mlx, data.window, 4, 4);

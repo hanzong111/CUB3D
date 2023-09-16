@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/08/10 12:20:01 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/16 21:34:42 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define SCREEN_W 1920
 # define SCREEN_H 1080
 # define WALL_H 64
+
+# define MAX_MAP_SIZE 10000
 
 # define OUT_OF_BOUND 99999
 # define HORIZONTAL 80
@@ -272,6 +274,7 @@ void	ft_check_symbol(t_data *data, char *line);
 void	ft_check_border(char **map, int i, int j);
 void	ft_check_valid_map(t_data *data);
 int		ft_check_player(t_data *data, char **map, int i, int j);
+void	map_size(t_collide *col, char **grid);
 
 //check_texture_utils.c
 int		ft_check_line(t_data *data, char **split);

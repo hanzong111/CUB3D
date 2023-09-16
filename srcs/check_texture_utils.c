@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:12:08 by gualee            #+#    #+#             */
-/*   Updated: 2023/08/09 17:37:32 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/16 21:41:16 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,29 @@ int	ft_check_textures(t_data *data)
 	return (0);
 }
 
-static void	ft_read_to_buff(char **buff, char **line, int fd)
-{
-	char	*new_line;
-	char	*temp;
+// static void	ft_read_to_buff(char **buff, char **line, int fd)
+// {
+// 	char	*new_line;
+// 	char	*temp;
 
-	temp = ft_strdup(*buff);
-	free(*buff);
-	*buff = NULL;
+// 	temp = ft_strdup(*buff);
+// 	free(*buff);
+// 	*buff = NULL;
 
-	while (1)
-	{
-		new_line = get_next_line(fd);
-		if (!new_line)
-			break ;
-		temp = ft_strjoin(temp, new_line);
-		if (ft_strchr(new_line, '\n'))
-			break ;
-	}
+// 	while (1)
+// 	{
+// 		new_line = get_next_line(fd);
+// 		if (!new_line)
+// 			break ;
+// 		temp = ft_strjoin(temp, new_line);
+// 		if (ft_strchr(new_line, '\n'))
+// 			break ;
+// 	}
 
-	*buff = temp;
-	free(*line);
-	*line = ft_strdup(*buff);
-}
+// 	*buff = temp;
+// 	free(*line);
+// 	*line = ft_strdup(*buff);
+// }
 
 void	ft_get_texture_data(t_data *data, int fd)
 {
@@ -72,33 +72,31 @@ void	ft_get_texture_data(t_data *data, int fd)
 	// 	ft_exit_all(data, "TEXTURE COLOUR ERROR 2\n", 1);
 }
 
-void	ft_get_map_data(t_data *data, int fd)
+void	load_map_to_array(t_data *data, char *file_path)
 {
+	int		fd;
 	char	*line;
-	char	*buff;
-	char	*nullptr;
+	int		i;
+	char	**map_arr;
 
-	nullptr = NULL;
-	line = NULL;
-	line = get_next_line(fd);
-	printf("line is %s\n", line);
-	while (line && !ft_strcmp(line, "\n"))
+	if (!(file_path) || (ft_strlen(file_path) < 5) ||
+		(ft_strncmp(file_path + ft_strlen(file_path) - 4, ".cub", 4)))
+		ft_exit_all(data, "Invalid file extension. Use .cub file.\n", 1);
+
+	fd = open(file_path, O_RDONLY);
+	if (fd < 0)
+		ft_exit_all(data, "Error opening file.\n", 1);
+
+	map_arr = malloc(sizeof(char *) * (MAX_MAP_SIZE + 1));
+	i = 0;
+	while ((line = get_next_line(fd)) && i < MAX_MAP_SIZE)
 	{
-		free(line);
-		line = get_next_line(fd);
+		map_arr[i] = line;
+		i++;
 	}
-	if (!line)
-	{
-		free(line);
-		ft_exit_all(data, "MAP ERROR : ???\n", 1);
-	}
-	buff = nullptr;
-	ft_bzero(buff, 0);
-	while (line)
-		ft_read_to_buff(&buff, &line, fd);
-	data->game.map = ft_split(buff, '\n');
-	ft_check_valid_map(data);
-	free(buff);
+	map_arr[i] = NULL;
+	data->game.map = map_arr;
+	close(fd);
 }
 
 void	initialize_map(t_data *data, char *path)
@@ -117,6 +115,17 @@ void	initialize_map(t_data *data, char *path)
 		ft_exit_all(data, "MAP ERROR : File does not end in .CUB\n", 1);
 	}
 	ft_get_texture_data(data, fd);
-	// ft_get_map_data(data, fd);
+	load_map_to_array(data, path);
+
+	printf("Map Generation Starts\n");
+	int i = 0;
+	while (data->game.map[i] != NULL)
+	{
+		printf("%s", data->game.map[i]);
+		i++;
+	}
+	printf("Map Generation Ends\n");
+
 	ft_check_valid_map(data);
+	map_size(&data->col, data->game.map);
 }

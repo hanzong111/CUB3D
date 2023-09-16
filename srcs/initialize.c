@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 15:57:59 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/08/10 12:41:45 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/16 21:35:30 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,5 @@ void	initialize(t_data *data)
 	// data->render.floor.r = 255;
 	// data->render.floor.g = 255;
 	// data->render.floor.b = 153;
-	map_size(&data->col, data->game.map);
+	// map_size(&data->col, data->game.map);
 }
