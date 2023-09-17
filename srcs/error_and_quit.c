@@ -6,11 +6,21 @@
 /*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:11:35 by gualee            #+#    #+#             */
-/*   Updated: 2023/07/25 14:53:18 by gualee           ###   ########.fr       */
+/*   Updated: 2023/09/17 02:27:01 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+void free_map_arr(char **map_arr)
+{
+    int i = 0;
+    while(map_arr[i] != NULL) {
+        free(map_arr[i]);
+        i++;
+    }
+    free(map_arr);
+}
 
 void	ft_free_split(char **split)
 {

@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:12:08 by gualee            #+#    #+#             */
-/*   Updated: 2023/09/16 21:57:40 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/17 13:28:42 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	ft_get_texture_data(t_data *data, int fd)
 	int		textures;
 	char	*line;
 	char	**split;
+	//int		lines;
 
 	textures = 0;
 	line = get_next_line(fd);
@@ -47,39 +48,58 @@ void	ft_get_texture_data(t_data *data, int fd)
 
 	/* skip \n line to start of map*/
 
-	load_map_to_array();
+	//INSERT HERE
+	load_map_to_array(data, fd);
+	//load_map_to_array(data, fd, &lines);
 
 	printf("Map Generation Starts\n");
 	int i = 0;
 	while (data->game.map[i] != NULL)
 	{
-		printf("%s\n", data->game.map[i]);
+		printf("%s", data->game.map[i]);
 		i++;
 	}
 	printf("Map Generation Ends\n");
 
 	free(line);
-	// if (!textures)
-	// 	ft_exit_all(data, "TEXTURE COLOUR ERROR 2\n", 1);
 }
 
-void	load_map_to_array(t_data *data, char *file_path)
+//mem leak, free function is in error_and_quit.c 
+void load_map_to_array(t_data *data, int fd)
 {
-	int		fd;
-	char	*line;
-	int		i;
-	char	**map_arr;
+    char *line;
+    int i;
+    char **map_arr;
+    int j;
 
-	map_arr = malloc(sizeof(char *) * (MAX_MAP_SIZE + 1));
-	i = 0;
-	while ((line = get_next_line(fd)) && i < MAX_MAP_SIZE)
-	{
-		map_arr[i] = line;
-		i++;
-	}
-	map_arr[i] = NULL;
-	data->game.map = map_arr;
-	close(fd);
+    map_arr = malloc(sizeof(char *) * (MAX_MAP_SIZE + 1));
+    i = 0;
+    while ((line = get_next_line(fd)) && i < MAX_MAP_SIZE)
+    {
+        int has_content = 0;
+        for(j = 0; line[j] != '\0'; j++) {
+            if(!isspace(line[j])) {
+                has_content = 1;
+                break;
+            }
+        }
+
+        if(has_content) {
+            // Remove newline character if present
+            int len = ft_strlen(line);
+            if(line[len-1] == '\n') {
+                line[len-1] = '\0';
+            }
+            
+            map_arr[i] = line;
+            i++;
+        } else {
+            free(line); // Free the line if it doesn't have content
+        }
+    }
+    map_arr[i] = NULL;
+    data->game.map = map_arr;
+    close(fd);
 }
 
 void	initialize_map(t_data *data, char *path)

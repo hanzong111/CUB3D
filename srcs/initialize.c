@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 15:57:59 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/09/16 21:35:30 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/17 14:05:11 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	map_size(t_collide *col, char **grid)
 	col->grid_size.y = 0;
 	while (grid[col->grid_size.y] != NULL)
 		col->grid_size.y++;
-	printf("row height is %d\n", col->grid_size.y);
 	col->row_length = malloc(sizeof(int) * col->grid_size.y);
 	i = -1;
 	while(++i < col->grid_size.y)
@@ -28,6 +27,22 @@ void	map_size(t_collide *col, char **grid)
 
 void	initialize(t_data *data)
 {
+	data->render.sky.r = -1;
+	data->render.sky.g = -1;
+	data->render.sky.b = -1;
+	data->render.floor.r = -1;
+	data->render.floor.g = -1;
+	data->render.floor.b = -1;
+	data->sprites.n_img.img = NULL;
+	data->sprites.s_img.img = NULL;
+	data->sprites.e_img.img = NULL;
+	data->sprites.w_img.img = NULL;
+	data->count.n_img = 0;
+	data->count.s_img = 0;
+	data->count.e_img = 0;
+	data->count.w_img = 0;
+	data->count.sky = 0;
+	data->count.floor = 0;
 	data->info.player_height = 32;
 	data->info.player_fov = 60;
 	data->info.d_to_plane = (SCREEN_W / 2)
@@ -35,38 +50,4 @@ void	initialize(t_data *data)
 	data->info.angle_between_rays = (data->info.player_fov
 			/ SCREEN_W) * M_PI / 180;
 	data->wall_info = malloc(sizeof(t_wallinfo) * SCREEN_W);
-	/*	Will be input in the future	*/
-	data->player.pos.x = 4 * WALL_H + (WALL_H / 2);
-	data->player.pos.y = 6 * WALL_H + (WALL_H / 2);
-	// data->player.dir.x = 0;
-	// data->player.dir.y = -1;
-
-	/*	Red	*/
-	data->render.north.r = 255;
-	data->render.north.g = 153;
-	data->render.north.b = 153;
-
-	/*	Orange	*/
-	data->render.south.r = 255;
-	data->render.south.g = 204;
-	data->render.south.b = 153;
-
-	/*	Blue-Purple	*/
-	data->render.east.r = 153;
-	data->render.east.g = 153;
-	data->render.east.b = 255;
-	
-	/*	Indigo	*/
-	data->render.west.r = 204;
-	data->render.west.g = 153;
-	data->render.west.b = 255;
-
-	// data->render.sky.r = 153;
-	// data->render.sky.g = 255;
-	// data->render.sky.b = 255;
-
-	// data->render.floor.r = 255;
-	// data->render.floor.g = 255;
-	// data->render.floor.b = 153;
-	// map_size(&data->col, data->game.map);
 }

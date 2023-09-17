@@ -6,7 +6,7 @@
 #    By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/14 20:26:19 by ojing-ha          #+#    #+#              #
-#    Updated: 2023/08/02 13:00:11 by ojing-ha         ###   ########.fr        #
+#    Updated: 2023/09/17 14:13:10 by ojing-ha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ CC			= gcc
 
 LIBFT_DIR	= libft/
 # MLX_DIR	= mlx/
-MLX_DIR	= minilibx-linux/
+MLX_DIR	= minilibx_linux/
 SRCS_DIR	= srcs/
 OBJS_DIR	= objs/
 
@@ -49,6 +49,7 @@ SRC_FILES	= cub3d_main\
 				check_texture_utils\
 				check_textures\
 				error_and_quit\
+				move_player\
 
 SRCS	= $(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJS	= $(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRC_FILES)))

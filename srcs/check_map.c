@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:47:32 by gualee            #+#    #+#             */
-/*   Updated: 2023/08/10 11:47:39 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/17 14:23:49 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,14 +102,10 @@ int	ft_check_player(t_data *data, char **map, int i, int j)
 			data->player.dir.x = -1;
 			data->player.dir.y = 0;
 		}
-		data->game.found_player = 1;
+		data->game.found_player++;
 		data->player.pos.x = j * WALL_H + (WALL_H / 2);
 		data->player.pos.y = i * WALL_H + (WALL_H / 2);
 	}
-	// data->player.pos.x = j + 0.5;
-	// data->player.pos.y = i + 0.5; /* Player position must be inside if else loop , so that it wont get updated when player is not present */
-									 /* data->player.pos.x is in pixel coordinates , thats why u need to use grid coordinate * 64 ( To convert it to pixel coordinate )
-									 	Then Add 64 / 2 to it to offset the player position to the center of the grid  */
 	return (1);
 }
 
@@ -138,6 +134,6 @@ void	ft_check_valid_map(t_data *data)
 		while (map[i][++j])
 			ft_check_everything(data, map, i, j);
 	}
-	if (!data->game.found_player)
+	if (data->game.found_player != 1)
 		ft_exit_all(data, "PLAYER ERROR\n", 1);
 }

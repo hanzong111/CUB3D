@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/08/09 17:46:47 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/17 13:47:47 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,9 @@ void	raytracer(t_data *data, char **grid)
 		data->temp.final = ray_find_wall(data, grid, data->temp);
 		if (data->temp.final.x == OUT_OF_BOUND && data->temp.final.y == OUT_OF_BOUND)
 		{
-			printf("Error !!!\n");
+			printf("Both ray.x and ray.y OUB Error !!!\n");
 			exit (0);
 		}
 		fill_in_wall_info(data, x);
-		// print_wall_info(data, x);
 	}
 }

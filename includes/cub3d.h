@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/09/16 21:34:42 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/17 14:12:43 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 # define CUB3D_H
 
 // # include <mlx.h>
-# include "../minilibx-linux/mlx.h"
+# include "../minilibx_linux/mlx.h"
 # include "../libft/libft.h"
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <math.h>
+# include <ctype.h>
 // Dont Change This :(
 // # define SCREEN_W 1920
 // # define SCREEN_H 1080
@@ -261,6 +262,7 @@ int		ft_valid_cub_file(char *path);
 void	ft_free_split(char **split);
 void	ft_exit(char *str, int status);
 void	ft_exit_all(t_data *data, char *str, int status);
+void	free_map_arr(char **map_arr);
 
 // check_map_utils.c
 int		ft_get_map_length(char **map);
@@ -278,10 +280,16 @@ void	map_size(t_collide *col, char **grid);
 
 //check_texture_utils.c
 int		ft_check_line(t_data *data, char **split);
+void 	load_map_to_array(t_data *data, int fd);
+//void 	load_map_to_array(t_data *data, int fd, int *lines);
 
 //check_textures.c
 int		ft_check_textures(t_data *data);
 void	ft_get_texture_data(t_data *data, int fd);
 void	ft_get_map_data(t_data *data, int fd);
 void	initialize_map(t_data *data, char *path);
+
+//move_player.c
+int		check_collision(char **grid, double x, double y);
+void	move_player(t_data *data, int keycode);
 #endif
