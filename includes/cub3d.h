@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/09/17 14:12:43 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/17 22:51:22 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,4 +292,11 @@ void	initialize_map(t_data *data, char *path);
 //move_player.c
 int		check_collision(char **grid, double x, double y);
 void	move_player(t_data *data, int keycode);
+
+//events.c
+int		event(int keycode, t_data *data);
+int		sl_close_window(t_data *data);
+int		key_press(int keycode, t_data *data);
+int		key_release(int keycode, t_data *data);
+
 #endif

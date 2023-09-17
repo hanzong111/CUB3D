@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_and_quit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:11:35 by gualee            #+#    #+#             */
-/*   Updated: 2023/09/17 02:27:01 by gualee           ###   ########.fr       */
+/*   Updated: 2023/09/17 22:52:57 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,3 @@ int	ft_strcmp(char *s1, char *s2)
 		i++;
 	return (s1[i] - s2[i]);
 }
-
-// int	ft_valid_cub_file(char *path)
-// {
-// 	int		len;
-// 	char	*extension;
-
-// 	len = ft_strlen(path);
-// 	if (!path)
-// 		ft_exit(NULL, ".CUB FILE ERROR\n", 1);
-
-// 	extension = path + len - 4;
-// 	if (len < 5 || ft_strncmp(extension, ".cub", len) != 0)
-// 		ft_exit(NULL, ".CUB FILE ERROR\n", 1);
-
-// 	return (1);
-// }

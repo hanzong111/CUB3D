@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:45:52 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/06/14 23:53:29 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/17 22:53:18 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,6 @@ void	fill_in_wall_info(t_data *data, int x)
 	if (!isnan(alpha))
 		d = d * cos(alpha);
 	data->wall_info[x].projected_h = ceil((data->info.d_to_plane * WALL_H) / d);
-	// if (isnan(data->wall_info[x].projected_h) || data->wall_info[x].projected_h <= 0)
-	// {
-	// 	printf("wall height error !!!\n");
-	// 	exit (0);
-	// }
 	get_player_dir(&data->temp, &data->player);
 	data->wall_info[x].wall_dir = get_wall_dir(&data->temp, &data->player);
 	data->wall_info[x].sprite_col = get_sprite_col(&data->temp);

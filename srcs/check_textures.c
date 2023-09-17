@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 15:04:55 by gualee            #+#    #+#             */
-/*   Updated: 2023/08/09 16:40:10 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/17 22:49:34 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,24 @@ static int	ft_process_texture(t_data *data, char *direction, char **split)
 	{
 		get_sprites(data, &data->sprites.n_img, line);
 		data->count.n_img = 1;
-		printf("North sprites saved!!\n");
 	}
 	else if (!ft_strcmp(direction, "SO"))
 	{
 		get_sprites(data, &data->sprites.s_img, line);
 		data->count.s_img = 1;
-		printf("South sprites saved!!\n");
 	}
 	else if (!ft_strcmp(direction, "EA"))
 	{
 		get_sprites(data, &data->sprites.e_img, line);
 		data->count.e_img = 1;
-		printf("East sprites saved!!\n");
 	}
 	else if (!ft_strcmp(direction, "WE"))
 	{
 		get_sprites(data, &data->sprites.w_img, line);
 		data->count.w_img = 1;
-		printf("West sprites saved!!\n");
 	}
 	else
 	{
-		printf("No Sprites Saved!!\n");
 		free(line);
 		return (1);
 	}
@@ -62,13 +57,16 @@ static int	ft_process_colour(t_data *data, char *direction, char **split)
 	r = ft_atoi(colour[0]);
 	g = ft_atoi(colour[1]);
 	b = ft_atoi(colour[2]);
+	free(colour[0]);
+	free(colour[1]);
+	free(colour[2]);
+	free(colour);
 	if (!ft_strcmp(direction, "F"))
 	{
 		data->render.floor.r = r;
 		data->render.floor.g = g;
 		data->render.floor.b = b;
 		data->count.floor = 1;
-		printf("Floor color saved !!\n");
 	}
 	else if (!ft_strcmp(direction, "C"))
 	{
@@ -76,7 +74,6 @@ static int	ft_process_colour(t_data *data, char *direction, char **split)
 		data->render.sky.g = g;
 		data->render.sky.b = b;
 		data->count.sky = 1;
-		printf("Sky color saved !!\n");
 	}
 	else
 		return (1);

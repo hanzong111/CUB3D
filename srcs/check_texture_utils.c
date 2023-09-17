@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:12:08 by gualee            #+#    #+#             */
-/*   Updated: 2023/09/17 13:28:42 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/17 22:47:38 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	ft_get_texture_data(t_data *data, int fd)
 	int		textures;
 	char	*line;
 	char	**split;
-	//int		lines;
 
 	textures = 0;
 	line = get_next_line(fd);
@@ -44,27 +43,10 @@ void	ft_get_texture_data(t_data *data, int fd)
 		ft_free_split(split);
 		line = get_next_line(fd);
 	}
-
-
-	/* skip \n line to start of map*/
-
-	//INSERT HERE
 	load_map_to_array(data, fd);
-	//load_map_to_array(data, fd, &lines);
-
-	printf("Map Generation Starts\n");
-	int i = 0;
-	while (data->game.map[i] != NULL)
-	{
-		printf("%s", data->game.map[i]);
-		i++;
-	}
-	printf("Map Generation Ends\n");
-
 	free(line);
 }
 
-//mem leak, free function is in error_and_quit.c 
 void load_map_to_array(t_data *data, int fd)
 {
     char *line;
@@ -85,7 +67,6 @@ void load_map_to_array(t_data *data, int fd)
         }
 
         if(has_content) {
-            // Remove newline character if present
             int len = ft_strlen(line);
             if(line[len-1] == '\n') {
                 line[len-1] = '\0';
@@ -94,7 +75,7 @@ void load_map_to_array(t_data *data, int fd)
             map_arr[i] = line;
             i++;
         } else {
-            free(line); // Free the line if it doesn't have content
+            free(line);
         }
     }
     map_arr[i] = NULL;

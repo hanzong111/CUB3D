@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:01:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/06/14 23:55:55 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/17 22:54:51 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	render_texture(t_data *data)
 	int			x;
 	int			start_pixel;
 	double		y_step;
-	// double		x_step;
 	double		scale;
 	t_img		img;
 	t_data_addr	src;
@@ -74,15 +73,12 @@ void	render_texture(t_data *data)
 		printf("wall height error !!!\n");
 		exit (0);
 	}
-		// printf("x is %d\n", x);
 		img = get_texture(data->wall_info[x], data->sprites);
 		src.address = mlx_get_data_addr(img.img, &src.pixel_bits,
 						&src.size_line, &src.endian);
 		start_pixel = ((SCREEN_H / 2) - ((int)data->wall_info[x].projected_h / 2));
 		scale = 64 / data->wall_info[x].projected_h;
 		y_step = 0;
-		// printf("start_pixel is %d\n", start_pixel);
-		// printf("wall_height is %f\n", data->wall_info[x].projected_h);
 		while (start_pixel < SCREEN_H && data->wall_info[x].projected_h >= 0)
 		{
 			if (start_pixel < 0)

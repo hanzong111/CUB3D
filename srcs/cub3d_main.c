@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/09/17 14:18:27 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/17 22:51:35 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,35 +21,6 @@
 /*	keypress = 2					*/
 /*	keyrelease = 3					*/
 
-int	event(int keycode, t_data *data)
-{
-	if (keycode == ESC_KEY)
-	{
-		ft_printf("Esc pressed.\n");
-		ft_printf("Exiting so_long ...\n");
-		exit(0);
-	}
-	if (keycode == W_KEY || keycode == S_KEY || keycode == A_KEY || keycode == D_KEY )
-		move_player(data, keycode);
-	if (keycode == LEFT_ARROW)
-		data->player.dir = rotate_vector((TURN_SPEED)
-				* M_PI / 180, data->player.dir);
-	if (keycode == RIGHT_ARROW)
-		data->player.dir = rotate_vector(-(TURN_SPEED)
-				* M_PI / 180, data->player.dir);
-	return (0);
-}
-
-
-int	sl_close_window(t_data *data)
-{
-	(void)data;
-	ft_printf("Window closed.\n");
-	ft_printf("Exiting cub3d...\n");
-	exit(0);
-	return (0);
-}
-
 int	render_next_frame(t_data *data)
 {
 	if (data->temp.keycode >= 0)
@@ -57,19 +28,6 @@ int	render_next_frame(t_data *data)
 	raytracer(data, data->game.map);
 	render_texture(data);
 	mlx_put_image_to_window(data->mlx, data->window, data->final_img.img, 0, 0);
-	return (0);
-}
-
-int	key_press(int keycode, t_data *data)
-{
-	data->temp.keycode = keycode;
-	return (0);
-}
-
-int	key_release(int keycode, t_data *data)
-{
-	(void)keycode;
-	data->temp.keycode = -1;
 	return (0);
 }
 

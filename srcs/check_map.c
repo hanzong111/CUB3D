@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:47:32 by gualee            #+#    #+#             */
-/*   Updated: 2023/09/17 14:23:49 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/17 22:46:52 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	ft_check_valid_map(t_data *data)
 	i = -1;
 	len = ft_get_map_length(data->game.map);
 	map = data->game.map;
-	data->game.found_player = 0; /* Gotta initialise outside the While loop , to act as a counter .*/
+	data->game.found_player = 0;
 	while (++i < len)
 	{
 		j = -1;
