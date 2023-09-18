@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:47:32 by gualee            #+#    #+#             */
-/*   Updated: 2023/09/17 22:46:52 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/18 19:26:38 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static int	ft_check_space(char **map, int i, int j)
 	row_below = i + 1;
 	left_column = j - 1;
 	right_column = j + 1;
-
 	if (map[i][j] != ' ')
 		return (0);
 	row_length = (int)ft_strlen(map[i]);
@@ -52,7 +51,6 @@ static int	ft_check_space(char **map, int i, int j)
 		ft_exit("SPACE ERROR\n", 1);
 	if (right_column < row_length && map[i][right_column] == '0')
 		ft_exit("SPACE ERROR\n", 1);
-
 	return (1);
 }
 
@@ -67,7 +65,6 @@ void	ft_check_border(char **map, int i, int j)
 	bot_row_length = (int)ft_strlen(map[i + 1]);
 	if (ft_check_space(map, i, j))
 		return ;
-
 	if ((curr_row_length > top_row_length
 			&& j >= top_row_length && map[i][j] != '1')
 			|| (j < top_row_length && map[i - 1][j] == ' ' && map[i][j] != '1')
@@ -79,29 +76,13 @@ void	ft_check_border(char **map, int i, int j)
 
 int	ft_check_player(t_data *data, char **map, int i, int j)
 {
+	char	dir_ij;
+
+	dir_ij = map[i][j];
 	if (map[i][j] == 'N' || map[i][j] == 'S'
 		|| map[i][j] == 'E' || map[i][j] == 'W')
 	{
-		if (map[i][j] == 'N')
-		{
-			data->player.dir.x = 0.00;
-			data->player.dir.y = 1;
-		}
-		else if (map[i][j] == 'S')
-		{
-			data->player.dir.x = 0.00;
-			data->player.dir.y = -1;
-		}
-		else if (map[i][j] == 'E')
-		{
-			data->player.dir.x = 1;
-			data->player.dir.y = 0;
-		}
-		else if (map[i][j] == 'W')
-		{
-			data->player.dir.x = -1;
-			data->player.dir.y = 0;
-		}
+		ft_check_player_helper(data, dir_ij);
 		data->game.found_player++;
 		data->player.pos.x = j * WALL_H + (WALL_H / 2);
 		data->player.pos.y = i * WALL_H + (WALL_H / 2);

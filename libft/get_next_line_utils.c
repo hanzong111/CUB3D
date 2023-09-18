@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 16:39:11 by ojing-ha          #+#    #+#             */
-/*   Updated: 2022/09/06 15:22:41 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/19 00:21:01 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	gnl_strcopy(char *buffer, char *newstr, int len, int type)
 	while (*buffer != '\0' && --len >= 0)
 	{
 		if (type == 1)
-		{	
+		{
 			if (*buffer == '\n')
 			{
 				*newstr = '\n';

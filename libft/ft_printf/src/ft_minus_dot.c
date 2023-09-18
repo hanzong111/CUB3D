@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_minus_dot.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:25:06 by ojing-ha          #+#    #+#             */
-/*   Updated: 2022/09/08 17:18:11 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/19 00:21:44 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_precision_bigger2(t_flags *f, t_pf *info)
 	info->width = info->width - info->strlen;
 	while (--info->width >= 0)
 		write(1, " ", 1);
-}	
+}
 
 void	ft_precision_smaller(t_flags *f, t_pf *info)
 {
@@ -75,7 +75,7 @@ void	ft_precision_smaller(t_flags *f, t_pf *info)
 			write(1, "0", 1);
 		ft_putstr_fd(info->format, 1);
 		info->wc = info->strlen;
-	}		
+	}
 	else
 	{
 		if (f->hash)

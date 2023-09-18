@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 09:56:26 by ojing-ha          #+#    #+#             */
-/*   Updated: 2022/07/08 10:21:55 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/19 00:20:49 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 void	ft_lstadd_front(t_list **lst, t_list *new)
-{	
+{
 	if (!new)
 		return ;
 	new->next = *(lst + 0);

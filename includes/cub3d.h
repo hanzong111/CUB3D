@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:54:10 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/09/17 22:51:22 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/19 00:20:26 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include <ctype.h>
+# include <stdbool.h>
 // Dont Change This :(
 // # define SCREEN_W 1920
 // # define SCREEN_H 1080
@@ -106,12 +107,12 @@ typedef struct s_player
 //	Collision Struct
 typedef struct s_collide
 {
-	t_dvct	A;
+	t_dvct	a;
 	t_ivct	grid;
 	t_ivct	grid_size;
 	int		*row_length;
-	double	X_a;
-	double	Y_a;
+	double	x_a;
+	double	y_a;
 	double	alpha;
 	double	angle_per_line;
 }	t_collide;
@@ -204,6 +205,14 @@ typedef struct s_counter
 	int	sky;
 	int	floor;
 }	t_counter;
+
+typedef struct s_texture_info
+{
+	int		start_pixel;
+	int		x;
+	double	y_step;
+}	t_texture_info;
+
 // Main Global Struct 
 typedef struct s_data
 {
@@ -226,6 +235,12 @@ typedef struct s_data
 void	initialize(t_data *data);
 void	raytracer(t_data *data, char **grid);
 
+// Ray_find_wall_utils
+void	init_horizontal(t_data *data);
+void	init_vertical(t_data *data);
+int		h_grid_wall_check(t_temp *tmp, t_collide *col, char **grid, t_ivct *v);
+int		v_grid_wall_check(t_temp *tmp, t_collide *col, char **grid, t_ivct *v);
+
 // Ray_find_wall Functions
 void	find_horizontal(t_data *data, char **grid);
 void	find_vertical(t_data *data, char **grid);
@@ -244,6 +259,8 @@ double	magnitude(t_dvct v);
 double	angle_between_vectors(t_dvct v1, t_dvct	v2);
 double	calculate_distance(t_ivct ply, t_ivct v);
 
+// Print Functions Utils
+void	print_wall_details(t_data *data, int x);
 // Print Functions
 void	print_wall_info(t_data *data, int x);
 
@@ -267,9 +284,8 @@ void	free_map_arr(char **map_arr);
 // check_map_utils.c
 int		ft_get_map_length(char **map);
 int		ft_check_all_one(t_data *data, int i, int j);
-void	get_textures(t_data *data, int fd);
+void	ft_check_player_helper(t_data *data, char direction);
 void	ft_check_everything(t_data *data, char **map, int i, int j);
-void	ft_camera_fov(t_data *data, double dir_y, double plyr_y, double plyr_x);
 
 //check_map.c
 void	ft_check_symbol(t_data *data, char *line);
@@ -280,7 +296,7 @@ void	map_size(t_collide *col, char **grid);
 
 //check_texture_utils.c
 int		ft_check_line(t_data *data, char **split);
-void 	load_map_to_array(t_data *data, int fd);
+void	load_map_to_array(t_data *data, int fd);
 //void 	load_map_to_array(t_data *data, int fd, int *lines);
 
 //check_textures.c
@@ -298,5 +314,14 @@ int		event(int keycode, t_data *data);
 int		sl_close_window(t_data *data);
 int		key_press(int keycode, t_data *data);
 int		key_release(int keycode, t_data *data);
+
+// texture_utils.c
+int		get_start_pixel_texture(int projected_h);
+void	fill_texture_pixel(t_data *data, t_data_addr *src,
+			t_data_addr *des, t_texture_info *tex_info);
+void	update_texture_values(int *start_pixel, double *y_step,
+			t_wallinfo *wall_info, double scale);
+void	render_texture_helper(t_data *data, t_data_addr *des,
+			t_data_addr *src, int x);
 
 #endif

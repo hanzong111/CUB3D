@@ -3,20 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   check_textures.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 15:04:55 by gualee            #+#    #+#             */
-/*   Updated: 2023/09/17 22:49:34 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/18 20:52:46 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static int	ft_process_texture(t_data *data, char *direction, char **split)
+static int	ft_process_texture_helper(t_data *data, char *direction, char *line)
 {
-	char	*line;
-
-	line = ft_strtrim(split[1], "\n");
 	if (!ft_strcmp(direction, "NO"))
 	{
 		get_sprites(data, &data->sprites.n_img, line);
@@ -38,46 +35,54 @@ static int	ft_process_texture(t_data *data, char *direction, char **split)
 		data->count.w_img = 1;
 	}
 	else
-	{
-		free(line);
 		return (1);
-	}
-	free(line);
 	return (0);
+}
+
+static int	ft_process_texture(t_data *data, char *direction, char **split)
+{
+	int		result;
+	char	*line;
+
+	line = ft_strtrim(split[1], "\n");
+	result = ft_process_texture_helper(data, direction, line);
+	free(line);
+	return (result);
+}
+
+static void	set_colours(t_data *data, char *direction, t_rgb colour)
+{
+	if (!ft_strcmp(direction, "F"))
+	{
+		data->render.floor = colour;
+		data->count.floor = 1;
+	}
+	else if (!ft_strcmp(direction, "C"))
+	{
+		data->render.sky = colour;
+		data->count.sky = 1;
+	}
 }
 
 static int	ft_process_colour(t_data *data, char *direction, char **split)
 {
 	char	**colour;
-	int		r;
-	int		g;
-	int		b;
+	t_rgb	colour_struct;
 
 	colour = ft_split(split[1], ',');
-	r = ft_atoi(colour[0]);
-	g = ft_atoi(colour[1]);
-	b = ft_atoi(colour[2]);
+	colour_struct.r = ft_atoi(colour[0]);
+	colour_struct.g = ft_atoi(colour[1]);
+	colour_struct.b = ft_atoi(colour[2]);
 	free(colour[0]);
 	free(colour[1]);
 	free(colour[2]);
 	free(colour);
-	if (!ft_strcmp(direction, "F"))
+	if (!ft_strcmp(direction, "F") || !ft_strcmp(direction, "C"))
 	{
-		data->render.floor.r = r;
-		data->render.floor.g = g;
-		data->render.floor.b = b;
-		data->count.floor = 1;
+		set_colours(data, direction, colour_struct);
+		return (0);
 	}
-	else if (!ft_strcmp(direction, "C"))
-	{
-		data->render.sky.r = r;
-		data->render.sky.g = g;
-		data->render.sky.b = b;
-		data->count.sky = 1;
-	}
-	else
-		return (1);
-	return (0);
+	return (1);
 }
 
 int	ft_check_line(t_data *data, char **split)

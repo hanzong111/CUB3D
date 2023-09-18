@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_convert_hex.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 18:59:02 by ojing-ha          #+#    #+#             */
-/*   Updated: 2022/09/08 17:18:11 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/19 00:21:32 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	ft_hex_nbr_len(t_pf *info, unsigned int i)
 		{
 			info->wc = 1;
 			return ;
-		}	
+		}
 	}
 	while (i >= 16)
 	{

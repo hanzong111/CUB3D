@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_wall_info.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:45:52 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/09/17 22:53:18 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/18 21:09:24 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	get_wall_dir(t_temp *temp, t_player *player)
 	return (0);
 }
 
-int		get_sprite_col(t_temp	*temp)
+int	get_sprite_col(t_temp	*temp)
 {
 	int	col;
 

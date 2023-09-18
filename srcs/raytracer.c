@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytracer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/09/17 13:47:47 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/18 21:35:38 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	raytracer(t_data *data, char **grid)
 		data->temp.ray_dir = rotate_vector(-data->info.angle_between_rays,
 				data->temp.ray_dir);
 		data->temp.final = ray_find_wall(data, grid, data->temp);
-		if (data->temp.final.x == OUT_OF_BOUND && data->temp.final.y == OUT_OF_BOUND)
+		if (data->temp.final.x == OUT_OF_BOUND
+			&& data->temp.final.y == OUT_OF_BOUND)
 		{
 			printf("Both ray.x and ray.y OUB Error !!!\n");
 			exit (0);

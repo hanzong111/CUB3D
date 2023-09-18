@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   error_and_quit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 16:11:35 by gualee            #+#    #+#             */
-/*   Updated: 2023/09/17 22:52:57 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/18 20:56:35 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-void free_map_arr(char **map_arr)
-{
-    int i = 0;
-    while(map_arr[i] != NULL) {
-        free(map_arr[i]);
-        i++;
-    }
-    free(map_arr);
-}
 
 void	ft_free_split(char **split)
 {
@@ -46,10 +36,8 @@ void	ft_exit(char *str, int status)
 
 void	ft_exit_all(t_data *data, char *str, int status)
 {
-
 	(void)data;
 	ft_exit(str, status);
-
 }
 
 int	ft_valid_cub_file(char *path)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 15:57:59 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/09/17 14:05:11 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/18 21:09:42 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	map_size(t_collide *col, char **grid)
 		col->grid_size.y++;
 	col->row_length = malloc(sizeof(int) * col->grid_size.y);
 	i = -1;
-	while(++i < col->grid_size.y)
+	while (++i < col->grid_size.y)
 		col->row_length[i] = ft_strlen(grid[i]);
 }
 

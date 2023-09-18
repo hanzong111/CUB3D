@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_texture_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:12:08 by gualee            #+#    #+#             */
-/*   Updated: 2023/09/17 22:47:38 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/18 20:44:59 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,51 @@
 int	ft_check_textures(t_data *data)
 {
 	if (data->count.n_img == 1 && data->count.s_img == 1
-		&&	data->count.e_img  == 1 && data->count.w_img == 1
+		&& data->count.e_img == 1 && data->count.w_img == 1
 		&& data->count.floor == 1 && data->count.sky == 1)
 		return (1);
 	return (0);
+}
+
+static int	process_line(char *line, char **map_arr, int i)
+{
+	int	has_content;
+	int	j;
+	int	len;
+
+	has_content = 0;
+	j = 0;
+	while (line[j] != '\0' && !has_content)
+		has_content = !isspace(line[j++]);
+	if (has_content)
+	{
+		len = ft_strlen(line);
+		if (line[len - 1] == '\n')
+			line[len - 1] = '\0';
+		map_arr[i] = line;
+		return (i + 1);
+	}
+	free(line);
+	return (i);
+}
+
+void	load_map_to_array(t_data *data, int fd)
+{
+	char	*line;
+	char	**map_arr;
+	int		i;
+
+	i = 0;
+	map_arr = malloc(sizeof(char *) * (MAX_MAP_SIZE + 1));
+	line = get_next_line(fd);
+	while (line && i < MAX_MAP_SIZE)
+	{
+		i = process_line(line, map_arr, i);
+		line = get_next_line(fd);
+	}
+	map_arr[i] = NULL;
+	data->game.map = map_arr;
+	close(fd);
 }
 
 void	ft_get_texture_data(t_data *data, int fd)
@@ -45,42 +86,6 @@ void	ft_get_texture_data(t_data *data, int fd)
 	}
 	load_map_to_array(data, fd);
 	free(line);
-}
-
-void load_map_to_array(t_data *data, int fd)
-{
-    char *line;
-    int i;
-    char **map_arr;
-    int j;
-
-    map_arr = malloc(sizeof(char *) * (MAX_MAP_SIZE + 1));
-    i = 0;
-    while ((line = get_next_line(fd)) && i < MAX_MAP_SIZE)
-    {
-        int has_content = 0;
-        for(j = 0; line[j] != '\0'; j++) {
-            if(!isspace(line[j])) {
-                has_content = 1;
-                break;
-            }
-        }
-
-        if(has_content) {
-            int len = ft_strlen(line);
-            if(line[len-1] == '\n') {
-                line[len-1] = '\0';
-            }
-            
-            map_arr[i] = line;
-            i++;
-        } else {
-            free(line);
-        }
-    }
-    map_arr[i] = NULL;
-    data->game.map = map_arr;
-    close(fd);
 }
 
 void	initialize_map(t_data *data, char *path)

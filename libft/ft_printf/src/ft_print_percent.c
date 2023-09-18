@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_percent.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:52:56 by ojing-ha          #+#    #+#             */
-/*   Updated: 2022/09/08 17:18:11 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/19 00:22:17 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ void	ft_print_percent(t_flags *flags, t_pf *info)
 	{
 		write(1, "%%", 1);
 		info->wc = 1;
-	}	
+	}
 }
 
 void	ft_p_minus_zero(t_pf *info)
 {
 	write(1, "%%", 1);
 	if (info->width == 0)
-	info->wc = 1;
+		info->wc = 1;
 	else
 		info->wc = info->width;
 	while (--info->width > 0)

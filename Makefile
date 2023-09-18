@@ -6,7 +6,7 @@
 #    By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/14 20:26:19 by ojing-ha          #+#    #+#              #
-#    Updated: 2023/09/17 22:51:46 by ojing-ha         ###   ########.fr        #
+#    Updated: 2023/09/19 00:47:12 by ojing-ha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ BLUE         = \033[0;94m
 MAGENTA     = \033[0;95m
 CYAN         = \033[0;96m
 WHITE         = \033[0;97m
-NAME		= cub3d
+NAME		= cub3D
 
 CC			= gcc
 
@@ -31,18 +31,21 @@ OBJS_DIR	= objs/
 
 INCLUDES	= -I includes/
 
-CFLAGS	= -Wall -Werror -Wextra $(INCLUDES) -fsanitize=address -g3
+CFLAGS	= -Wall -Werror -Wextra $(INCLUDES) -fsanitize=leak -g3
 LIBFTFLAGS	= -L$(LIBFT_DIR) -lft
 MLXFLAGS	= -lmlx -framework OpenGL -framework Appkit
 
 SRC_FILES	= cub3d_main\
 				initialize\
 				raytracer\
+				ray_find_wall_utils\
 				ray_find_wall\
 				vector_operations_1\
+				print_functions_utils\
 				print_functions\
 				fill_wall_info\
 				sprites\
+				texture_utils\
 				texture\
 				check_map_utils\
 				check_map\

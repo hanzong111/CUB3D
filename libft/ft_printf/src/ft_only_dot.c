@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_only_dot.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 19:29:40 by ojing-ha          #+#    #+#             */
-/*   Updated: 2022/09/08 17:18:11 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/19 00:21:57 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	ft_smaller(t_flags *f, t_pf *info, char *type)
 		while (--info->strlen >= 0)
 			info->wc += write(1, "0", 1);
 		ft_putstr_fd(info->format, 1);
-	}		
+	}
 	else
 	{
 		ft_print_prefix(f, info, type);

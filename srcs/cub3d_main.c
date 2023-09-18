@@ -6,7 +6,7 @@
 /*   By: ojing-ha <ojing-ha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 20:53:55 by ojing-ha          #+#    #+#             */
-/*   Updated: 2023/09/17 22:51:35 by ojing-ha         ###   ########.fr       */
+/*   Updated: 2023/09/19 01:11:18 by ojing-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	main(int argc, char **argv)
 {
 	t_data			data;
 
-	(void)argc;
+	if (argc > 2)
+		ft_exit("Too many Arguments!!!\n", 1);
 	initialize(&data);
 	data.mlx = mlx_init();
 	data.window = mlx_new_window(data.mlx, SCREEN_W, SCREEN_H, "CUB3D");
