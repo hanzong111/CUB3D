@@ -7,10 +7,7 @@ By implementing the raycasting engine from scratch, this project provides a deep
 
 Here is a demonstration of the dynamic map generation feature mentioned above. The game adapts to any valid .cub map file provided, rendering the environment accordingly. Additionally, you can create your own custom .cub map to test and explore different level designs.
 
-<video width="600" controls>
-  <source src="readme_utils/diff_maps.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+[![Dynamic Map Generation](https://www.youtube.com/watch?v=3QXR1Fd46A4)]
 
 ## Table of Contents
 
