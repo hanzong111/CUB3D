@@ -95,8 +95,56 @@ Inside the `maps` directory, there are multiple predefined `.cub` files, each of
 ```bash
 ./cub3d maps/maze.cub  # Standard maze
 ./cub3d maps/omega.cub  # A map that is very big in size
-./cub3d maps/small.cub  # A very small map 
+./cub3d maps/small.cub  # A very small map
 ```
+### 🏰️ Creating Your Own Custom `.cub` Map  
+
+Cub3D allows you to create and load your own custom maps using `.cub` files. However, your map must follow specific formatting rules to ensure proper functionality.  
+
+#### **📝 `.cub` Map Rules**  
+1. **The Map Must Be Enclosed**  
+   - The outer walls of the map **must be completely enclosed** with `1`.  
+   - If the map has gaps or open edges, the game will not function correctly.  
+
+2. **Allowed Characters in the Map Grid**  
+   - `1` → Wall  
+   - `0` → Walkable space  
+   - `N`, `S`, `E`, `W` → Player starting position & facing direction  
+   - ` ` (space) → Empty/ignored area outside the map  
+
+3. **Player Spawn Rules**  
+   - The map must **contain exactly one** player starting position (`N`, `S`, `E`, or `W`).  
+   - The player will face in the corresponding direction at spawn.  
+
+4. **Texture & Color Configuration**  
+   - The first lines of the `.cub` file must define **textures and colors**:  
+     ```text
+     NO ./textures/wall_north.xpm
+     SO ./textures/wall_south.xpm
+     WE ./textures/wall_west.xpm
+     EA ./textures/wall_east.xpm
+     F 220,100,50  # Floor color (RGB)
+     C 225,225,225  # Ceiling color (RGB)
+     ```
+   - The map grid **must come after these definitions**.  
+
+#### **📝 Example of a Valid `.cub` File**  
+```text
+NO ./textures/wall_north.xpm
+SO ./textures/wall_south.xpm
+WE ./textures/wall_west.xpm
+EA ./textures/wall_east.xpm
+F 150,150,150
+C 255,255,255
+
+111111
+100001
+10N001
+100001
+111111
+```
+✅ **This map is valid** because it is fully enclosed, contains one player spawn, and follows the `.cub` format.
+
 #### Running the game 
 
 ```bash
